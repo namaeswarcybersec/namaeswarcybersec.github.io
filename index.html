@@ -1,426 +1,376 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAMAESWAR CYBERSEC | Secure Today, Safe Tomorrow</title>
-    <meta name="description" content="Elite offensive security training and robust vulnerability assessments for the modern digital frontier.">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Shield, 
+  Terminal, 
+  GraduationCap, 
+  Lock, 
+  Activity, 
+  Cpu, 
+  Globe, 
+  Instagram, 
+  Youtube, 
+  Menu, 
+  X, 
+  ChevronRight, 
+  Zap,
+  ShieldCheck,
+  Server
+} from 'lucide-react';
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            black: '#0A0A0A',
-                            cyan: '#00F3FF',
-                            silver: '#C0C0C0',
-                        }
-                    },
-                    fontFamily: {
-                        fira: ['Fira Code', 'monospace'],
-                        inter: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
+/**
+ * NAMAESWAR CYBERSEC - HomePage.jsx
+ * A professional, futuristic cybersecurity landing page.
+ * 
+ * Dependencies required: 
+ * npm install framer-motion lucide-react
+ * Tailwind CSS via CDN or local config.
+ */
 
-    <style>
-        :root {
-            --neon-cyan: #00F3FF;
-        }
+const HomePage = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-        body {
-            background-color: #0A0A0A;
-            color: #C0C0C0;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
+  // Handle scroll effect for header
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-        /* Matrix Grid Pattern */
-        .matrix-grid {
-            background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
-        }
+  // Custom Styles for Neon and Grid
+  const styles = {
+    glass: "backdrop-blur-xl bg-[#0A0A0A]/80 border-b border-[#00F3FF]/10",
+    neonText: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.2)" },
+    neonBorder: "border border-[#00F3FF]/20 hover:border-[#00F3FF]/60 transition-all duration-500",
+    gridBg: {
+      backgroundImage: `linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px), 
+                        linear-gradient(to bottom, rgba(0, 243, 255, 0.05) 1px, transparent 1px)`,
+      backgroundSize: '40px 40px'
+    }
+  };
 
-        /* Glassmorphism */
-        .glass-nav {
-            background: rgba(10, 10, 10, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
-        }
+  const navLinks = [
+    { name: 'Home', href: '#Home' },
+    { name: 'Academy', href: '#Academy' },
+    { name: 'Services', href: '#Services' },
+    { name: 'About Us', href: '#AboutUs' },
+    { name: 'Contact Us', href: '#ContactUs' },
+  ];
 
-        .glass-card {
-            background: rgba(20, 20, 20, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 243, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  return (
+    <div className="min-h-screen bg-[#0A0A0A] text-[#C0C0C0] font-['Inter',sans-serif] selection:bg-[#00F3FF] selection:text-[#0A0A0A] overflow-x-hidden">
+      {/* Global Fonts Injection */}
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+          .font-fira { font-family: 'Fira Code', monospace; }
+          .neon-pulse { animation: neon-pulse 2s infinite ease-in-out; }
+          @keyframes neon-pulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.2), inset 0 0 2px rgba(0, 243, 255, 0.1); }
+            50% { box-shadow: 0 0 20px rgba(0, 243, 255, 0.5), inset 0 0 10px rgba(0, 243, 255, 0.2); }
+          }
+        `}
+      </style>
 
-        .glass-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
-            background: rgba(0, 243, 255, 0.02);
-        }
-
-        /* Animations */
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        .cursor-blink::after {
-            content: '_';
-            animation: blink 1s infinite;
-            color: var(--neon-cyan);
-        }
-
-        @keyframes rotate-radar {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .animate-radar {
-            animation: rotate-radar 20s linear infinite;
-        }
-
-        @keyframes pulse-border {
-            0%, 100% { border-color: rgba(0, 243, 255, 0.2); box-shadow: 0 0 0px rgba(0, 243, 255, 0); }
-            50% { border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); }
-        }
-
-        .active-pulse {
-            animation: pulse-border 3s infinite;
-        }
-
-        .neon-text {
-            text-shadow: 0 0 15px rgba(0, 243, 255, 0.7);
-        }
-
-        /* Spinning Graphic Rings */
-        .radar-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px dashed rgba(0, 243, 255, 0.3);
-        }
-
-        /* Section Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0A0A0A; }
-        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00F3FF; }
-    </style>
-</head>
-<body class="selection:bg-cyber-cyan selection:text-cyber-black">
-
-    <!-- Global Navigation -->
-    <nav class="fixed top-0 w-full z-[100] glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 group">
-                <i class="ph-fill ph-shield-check text-3xl text-cyber-cyan transition-transform duration-700 group-hover:rotate-[360deg]"></i>
-                <div class="font-fira font-bold text-xl tracking-tighter">
-                    <span class="text-white">NAMAESWAR</span>
-                    <span class="text-cyber-cyan neon-text">CYBERSEC</span>
-                </div>
-            </a>
-
-            <!-- Desktop Nav -->
-            <div class="hidden lg:flex items-center gap-8 font-fira text-[13px] uppercase tracking-[0.2em]">
-                <a href="index.html" class="text-cyber-cyan border-b border-cyber-cyan">Home</a>
-                <a href="academy.html" class="text-white hover:text-cyber-cyan transition-colors">Academy</a>
-                <a href="services.html" class="text-white hover:text-cyber-cyan transition-colors">Services</a>
-                <a href="about.html" class="text-white hover:text-cyber-cyan transition-colors">About Us</a>
-                <a href="contact.html" class="text-white hover:text-cyber-cyan transition-colors">Contact</a>
+      {/* --- HEADER --- */}
+      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? styles.glass : 'bg-transparent py-4'}`}>
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center space-x-3 group">
+            {/* PASTE YOUR LOGO SVG CODE HERE */}
+            <div className="w-10 h-10 flex items-center justify-center bg-[#00F3FF]/10 rounded-lg border border-[#00F3FF]/30 group-hover:rotate-[360deg] transition-transform duration-700">
+              <Shield className="text-[#00F3FF]" size={24} />
             </div>
+            <span className="font-fira font-bold text-xl tracking-tighter text-white">
+              NAMAESWAR <span className="text-[#00F3FF]">CYBERSEC</span>
+            </span>
+          </div>
 
-            <!-- Mobile Menu Btn -->
-            <button class="lg:hidden text-cyber-cyan text-3xl" id="menuBtn">
-                <i class="ph ph-list" id="menuIcon"></i>
-            </button>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex space-x-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="font-fira text-sm hover:text-[#00F3FF] transition-colors relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#00F3FF] transition-all group-hover:w-full" />
+              </a>
+            ))}
+          </nav>
+
+          {/* Mobile Toggle */}
+          <button className="md:hidden text-[#00F3FF]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X /> : <Menu />}
+          </button>
         </div>
 
-        <!-- Mobile Drawer -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-cyber-black/95 backdrop-blur-xl border-b border-cyber-cyan/20 px-6 py-10 space-y-6">
-            <a href="index.html" class="block font-fira text-lg text-cyber-cyan uppercase tracking-widest">Home</a>
-            <a href="academy.html" class="block font-fira text-lg text-white uppercase tracking-widest">Academy</a>
-            <a href="services.html" class="block font-fira text-lg text-white uppercase tracking-widest">Services</a>
-            <a href="about.html" class="block font-fira text-lg text-white uppercase tracking-widest">About Us</a>
-            <a href="contact.html" class="block font-fira text-lg text-white uppercase tracking-widest">Contact</a>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-[#0A0A0A] border-b border-[#00F3FF]/20"
+            >
+              <div className="flex flex-col p-6 space-y-4">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="font-fira text-lg text-[#C0C0C0] hover:text-[#00F3FF]"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* --- HERO SECTION --- */}
+      <section id="Home" className="relative pt-32 pb-20 md:pt-48 md:pb-40 overflow-hidden" style={styles.gridBg}>
+        {/* Animated Particles/Nodes Effect */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-[#00F3FF] rounded-full"
+              animate={{
+                y: [0, -1000],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: Math.random() * 5 + 5,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+              }}
+              style={{ left: `${Math.random() * 100}%`, top: '100%' }}
+            />
+          ))}
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <header id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <div class="matrix-grid absolute inset-0 z-0 opacity-40"></div>
-        
-        <!-- Background Radial Orb -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyber-cyan/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center md:text-left">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                transition={{ delay: 0.3 }}
+                className="inline-flex items-center space-x-2 bg-[#00F3FF]/10 border border-[#00F3FF]/30 px-3 py-1 rounded-full mb-6"
+              >
+                <Zap size={14} className="text-[#00F3FF]" />
+                <span className="font-fira text-[10px] tracking-widest text-[#00F3FF] uppercase">Initializing Secure Protocol v2.0</span>
+              </motion.div>
+              
+              <h1 className="text-5xl md:text-8xl font-fira font-bold text-white mb-6 leading-tight">
+                NAMAESWAR <br />
+                <span className="text-[#00F3FF]" style={styles.neonText}>CYBERSEC</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-[#C0C0C0] max-w-xl mb-10 font-light tracking-wide leading-relaxed">
+                SECURE TODAY, SAFE TOMORROW. Providing elite offensive security training and robust vulnerability assessments for the digital frontier.
+              </p>
 
-        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
-            <div class="space-y-8">
-                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 text-[11px] font-fira tracking-[0.2em] text-cyber-cyan">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-cyan opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyber-cyan"></span>
-                    </span>
-                    Initializing Secure Protocol v2.0
-                </div>
+              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0, 243, 255, 0.4)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-[#00F3FF] text-[#0A0A0A] font-fira font-bold rounded-sm tracking-tighter"
+                >
+                  EXPLORE ACADEMY
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(0, 243, 255, 0.1)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 border border-[#00F3FF] text-[#00F3FF] font-fira font-bold rounded-sm tracking-tighter"
+                >
+                  OUR SERVICES
+                </motion.button>
+              </div>
+            </motion.div>
 
-                <h1 class="text-5xl lg:text-7xl font-fira font-bold text-white leading-tight">
-                    NAMAESWAR <br>
-                    <span class="text-cyber-cyan neon-text cursor-blink">CYBERSEC</span>
-                </h1>
-
-                <p class="text-lg md:text-xl font-light text-cyber-silver leading-relaxed max-w-xl">
-                    SECURE TODAY, SAFE TOMORROW. <br class="hidden md:block"> Providing elite offensive security training and robust vulnerability assessments for the modern digital frontier.
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-6 pt-4">
-                    <a href="academy.html" class="group relative px-10 py-4 bg-cyber-cyan text-cyber-black font-fira font-bold text-sm tracking-widest uppercase overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(0,243,255,0.6)]">
-                        Explore Academy
-                    </a>
-                    <a href="services.html" class="px-10 py-4 border border-cyber-cyan text-cyber-cyan font-fira font-bold text-sm tracking-widest uppercase hover:bg-cyber-cyan/10 transition-all">
-                        Our Services
-                    </a>
-                </div>
-            </div>
-
-            <!-- Radar Tech Graphic -->
-            <div class="hidden lg:flex justify-center items-center h-[500px] relative">
-                <div class="radar-ring w-[400px] h-[400px] border-dashed border-cyber-cyan/20 animate-radar"></div>
-                <div class="radar-ring w-[300px] h-[300px] border-solid border-cyber-cyan/10 animate-radar" style="animation-direction: reverse; animation-duration: 15s;"></div>
-                <div class="radar-ring w-[200px] h-[200px] border-dashed border-cyber-cyan/40 animate-radar"></div>
-                
-                <div class="relative z-10 w-32 h-32 bg-cyber-black border border-cyber-cyan rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(0,243,255,0.2)]">
-                    <i class="ph-fill ph-cpu text-6xl text-cyber-cyan animate-pulse"></i>
-                </div>
-
-                <!-- Floating Data Points -->
-                <div class="absolute top-10 right-10 p-3 glass-card rounded-lg text-[10px] font-fira border-cyber-cyan/20">
-                    <div class="text-cyber-cyan">ENCRYPTION: ACTIVE</div>
-                    <div class="text-white/40">AES-256-GCM</div>
-                </div>
-                <div class="absolute bottom-10 left-10 p-3 glass-card rounded-lg text-[10px] font-fira border-cyber-cyan/20">
-                    <div class="text-cyber-cyan">TRAFFIC: SECURED</div>
-                    <div class="text-white/40">NODE_ID: 7421X</div>
-                </div>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
+              className="hidden md:flex justify-center"
+            >
+              <div className="relative w-80 h-80">
+                <div className="absolute inset-0 bg-[#00F3FF]/10 rounded-full blur-[80px] animate-pulse" />
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="w-full h-full border-2 border-dashed border-[#00F3FF]/20 rounded-full flex items-center justify-center"
+                >
+                  <motion.div
+                     animate={{ rotate: -360 }}
+                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                     className="w-64 h-64 border-2 border-[#00F3FF]/40 rounded-full flex items-center justify-center p-8 bg-[#0A0A0A]"
+                  >
+                    <Cpu size={120} className="text-[#00F3FF] opacity-80" strokeWidth={1} />
+                  </motion.div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
         </div>
-    </header>
+      </section>
 
-    <!-- Tactical Operations Section -->
-    <section id="tactical" class="py-32 relative bg-[#0D0D0D]/50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-20 text-center lg:text-left reveal">
-                <div class="flex items-center gap-4 mb-4 justify-center lg:justify-start">
-                    <div class="h-[1px] w-12 bg-cyber-cyan"></div>
-                    <span class="font-fira text-cyber-cyan text-xs tracking-[0.4em] uppercase">Core Methodology</span>
-                </div>
-                <h2 class="text-4xl md:text-5xl font-fira font-bold text-white uppercase tracking-tighter">
-                    Tactical <span class="text-cyber-cyan neon-text">Operations</span>
-                </h2>
-                <p class="mt-6 text-cyber-silver max-w-2xl font-light leading-relaxed">
-                    Our ecosystem is built on the principle of continuous offensive-defensive evolution. We provide the tools and the training to survive the next generation of cyber warfare.
-                </p>
+      {/* --- QUICK OVERVIEW (Academy & Services) --- */}
+      <section id="Academy" className="py-24 bg-[#0D0D0D] border-y border-[#00F3FF]/10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+              <h2 className="font-fira text-3xl md:text-5xl text-white font-bold mb-4">
+                TACTICAL <span className="text-[#00F3FF]">OPERATIONS</span>
+              </h2>
+              <p className="text-[#C0C0C0] max-w-lg">Advanced education and protection services designed for modern digital warfare.</p>
             </div>
+            <div className="h-[2px] flex-grow mx-10 mb-4 bg-gradient-to-r from-transparent via-[#00F3FF]/30 to-transparent hidden lg:block" />
+          </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1 -->
-                <div class="glass-card active-pulse p-8 rounded-2xl flex flex-col group reveal">
-                    <div class="w-14 h-14 bg-cyber-cyan/10 rounded-xl flex items-center justify-center text-cyber-cyan text-3xl mb-8 group-hover:bg-cyber-cyan transition-colors group-hover:text-cyber-black">
-                        <i class="ph-bold ph-graduation-cap"></i>
-                    </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">1-Month Bootcamp</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Practical-only learning covering OSI Model, TCP/IP, and OWASP Top 10 vulnerabilities. No fluff, just results.
-                    </p>
-                    <div class="mt-8 flex items-center gap-2 text-cyber-cyan font-fira text-[10px] uppercase tracking-widest">
-                        <span class="w-1.5 h-1.5 bg-cyber-cyan rounded-full"></span> Live Enrollment
-                    </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Card 1: Academy Highlight (Pulsing) */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className={`p-8 bg-[#111] rounded-xl flex flex-col h-full neon-pulse ${styles.neonBorder}`}
+            >
+              <div className="w-12 h-12 bg-[#00F3FF]/20 rounded flex items-center justify-center mb-6">
+                <GraduationCap className="text-[#00F3FF]" />
+              </div>
+              <h3 className="font-fira text-xl text-white font-bold mb-3">One Month Bootcamp</h3>
+              <p className="text-sm leading-relaxed mb-6 flex-grow">Practical-only learning covering OSI Model, TCP/IP, and OWASP Top 10 vulnerabilities.</p>
+              <div className="pt-4 border-t border-[#00F3FF]/10 flex items-center text-[#00F3FF] font-fira text-xs uppercase tracking-widest">
+                <span>Active Course</span>
+                <ChevronRight size={14} className="ml-2" />
+              </div>
+            </motion.div>
 
-                <!-- Card 2 -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col group opacity-60 reveal">
-                    <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-cyber-silver text-3xl mb-8">
-                        <i class="ph-bold ph-terminal-window"></i>
-                    </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">Upcoming Academy</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Advanced VAPT modules, specialized Red Teaming operations, and Kernel exploitation pathways.
-                    </p>
-                    <div class="mt-8 text-white/30 font-fira text-[10px] uppercase tracking-widest">
-                        Status: In Development
-                    </div>
-                </div>
+            {/* Card 2: Upcoming Academy */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className={`p-8 bg-[#0F0F0F] rounded-xl flex flex-col h-full ${styles.neonBorder}`}
+            >
+              <div className="w-12 h-12 bg-white/5 rounded flex items-center justify-center mb-6">
+                <Terminal className="text-gray-400" />
+              </div>
+              <h3 className="font-fira text-xl text-white font-bold mb-3">Upcoming Academy</h3>
+              <ul className="text-sm space-y-2 mb-6 flex-grow">
+                <li className="flex items-center opacity-60"><ChevronRight size={12} className="mr-2" /> Advanced VAPT</li>
+                <li className="flex items-center opacity-60"><ChevronRight size={12} className="mr-2" /> Red Teaming Ops</li>
+              </ul>
+              <div className="text-gray-600 font-fira text-[10px] uppercase tracking-widest">In Development</div>
+            </motion.div>
 
-                <!-- Card 3 -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col group reveal">
-                    <div class="w-14 h-14 bg-cyber-cyan/10 rounded-xl flex items-center justify-center text-cyber-cyan text-3xl mb-8 group-hover:bg-cyber-cyan transition-colors group-hover:text-cyber-black">
-                        <i class="ph-bold ph-shield-search"></i>
-                    </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">VAPT Assessment</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Professional-grade Vulnerability Assessment & Penetration Testing to harden your organizational assets.
-                    </p>
-                    <a href="services.html" class="mt-8 flex items-center gap-2 text-cyber-cyan font-fira text-[10px] uppercase tracking-widest hover:underline">
-                        Inquire Protocol <i class="ph ph-arrow-right"></i>
-                    </a>
-                </div>
+            {/* Card 3: VAPT Services */}
+            <motion.div 
+              id="Services"
+              whileHover={{ y: -10 }}
+              className={`p-8 bg-[#111] rounded-xl flex flex-col h-full ${styles.neonBorder}`}
+            >
+              <div className="w-12 h-12 bg-[#00F3FF]/10 rounded flex items-center justify-center mb-6">
+                <ShieldCheck className="text-[#00F3FF]" />
+              </div>
+              <h3 className="font-fira text-xl text-white font-bold mb-3">VAPT Assessment</h3>
+              <p className="text-sm leading-relaxed mb-6 flex-grow">Professional-grade Vulnerability Assessment & Penetration Testing for organizations.</p>
+              <div className="pt-4 border-t border-[#00F3FF]/10 flex items-center text-[#00F3FF] font-fira text-xs uppercase tracking-widest">
+                <span>Inquire Now</span>
+                <ChevronRight size={14} className="ml-2" />
+              </div>
+            </motion.div>
 
-                <!-- Card 4 -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col group opacity-60 reveal">
-                    <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-cyber-silver text-3xl mb-8">
-                        <i class="ph-bold ph-hard-drives"></i>
-                    </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">IT Consultancy</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Managed SOC services, infrastructure audit, and high-performance cloud security architecture.
-                    </p>
-                    <div class="mt-8 text-white/30 font-fira text-[10px] uppercase tracking-widest">
-                        Status: Pipeline stage
-                    </div>
-                </div>
-            </div>
+            {/* Card 4: Upcoming IT Consultancy */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className={`p-8 bg-[#0F0F0F] rounded-xl flex flex-col h-full ${styles.neonBorder}`}
+            >
+              <div className="w-12 h-12 bg-white/5 rounded flex items-center justify-center mb-6">
+                <Server className="text-gray-400" />
+              </div>
+              <h3 className="font-fira text-xl text-white font-bold mb-3">IT Consultancy</h3>
+              <ul className="text-sm space-y-2 mb-6 flex-grow">
+                <li className="flex items-center opacity-60"><ChevronRight size={12} className="mr-2" /> Managed SOC</li>
+                <li className="flex items-center opacity-60"><ChevronRight size={12} className="mr-2" /> Cloud Security</li>
+              </ul>
+              <div className="text-gray-600 font-fira text-[10px] uppercase tracking-widest">Planned Services</div>
+            </motion.div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Professional Footer -->
-    <footer class="bg-cyber-black pt-24 pb-12 border-t border-cyber-cyan/10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
-                <div class="space-y-6">
-                    <div class="flex items-center gap-3">
-                        <i class="ph-fill ph-shield-check text-3xl text-cyber-cyan"></i>
-                        <div class="font-fira font-bold text-lg text-white">
-                            NAMAESWAR <span class="text-cyber-cyan">CYBERSEC</span>
-                        </div>
-                    </div>
-                    <p class="text-cyber-silver/60 text-sm leading-relaxed font-light">
-                        The ultimate destination for offensive security education and enterprise vulnerability management.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-cyber-cyan hover:border-cyber-cyan transition-all">
-                            <i class="ph-bold ph-instagram-logo"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-cyber-cyan hover:border-cyber-cyan transition-all">
-                            <i class="ph-bold ph-youtube-logo"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-cyber-cyan hover:border-cyber-cyan transition-all">
-                            <i class="ph-bold ph-linkedin-logo"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="font-fira font-bold text-white text-sm uppercase tracking-widest mb-8">Navigation</h4>
-                    <ul class="space-y-4 text-cyber-silver/50 text-[13px] font-light">
-                        <li><a href="index.html" class="hover:text-cyber-cyan transition-colors">Home</a></li>
-                        <li><a href="academy.html" class="hover:text-cyber-cyan transition-colors">Academy</a></li>
-                        <li><a href="services.html" class="hover:text-cyber-cyan transition-colors">Services</a></li>
-                        <li><a href="about.html" class="hover:text-cyber-cyan transition-colors">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-cyber-cyan transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-fira font-bold text-white text-sm uppercase tracking-widest mb-8">Protocol</h4>
-                    <ul class="space-y-4 text-cyber-silver/50 text-[13px] font-light">
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Course Portal</a></li>
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Client login</a></li>
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Security Audit</a></li>
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Pentest Report</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-fira font-bold text-white text-sm uppercase tracking-widest mb-8">System Info</h4>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
-                        <div class="flex justify-between text-[10px] font-fira">
-                            <span class="text-white/40">Uptime:</span>
-                            <span class="text-cyber-cyan">99.98%</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] font-fira">
-                            <span class="text-white/40">Latency:</span>
-                            <span class="text-cyber-cyan">14ms</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] font-fira">
-                            <span class="text-white/40">Encryption:</span>
-                            <span class="text-cyber-cyan">AES-256</span>
-                        </div>
-                    </div>
-                </div>
+      {/* --- FOOTER --- */}
+      <footer id="ContactUs" className="bg-[#0A0A0A] pt-20 pb-10 border-t border-[#00F3FF]/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-12 mb-16">
+            <div className="col-span-1">
+              <div className="flex items-center space-x-3 mb-6">
+                <Shield className="text-[#00F3FF]" size={28} />
+                <span className="font-fira font-bold text-lg tracking-tighter text-white uppercase">Namaeswar Cybersec</span>
+              </div>
+              <p className="text-sm font-light leading-relaxed mb-6">
+                Fortifying the digital world through offensive expertise and practical education. Join the academy and secure your future.
+              </p>
+              <div className="flex space-x-4">
+                <a href="#" className="p-2 bg-white/5 hover:bg-[#00F3FF]/20 text-[#C0C0C0] hover:text-[#00F3FF] rounded-lg transition-all">
+                  <Instagram size={20} />
+                </a>
+                <a href="#" className="p-2 bg-white/5 hover:bg-[#00F3FF]/20 text-[#C0C0C0] hover:text-[#00F3FF] rounded-lg transition-all">
+                  <Youtube size={20} />
+                </a>
+                <a href="#" className="p-2 bg-white/5 hover:bg-[#00F3FF]/20 text-[#C0C0C0] hover:text-[#00F3FF] rounded-lg transition-all">
+                  <Globe size={20} />
+                </a>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-fira font-bold text-white mb-6 uppercase tracking-widest text-sm underline decoration-[#00F3FF] decoration-2 underline-offset-8">Academy Path</h4>
+              <ul className="space-y-4 text-sm">
+                <li><a href="#" className="hover:text-[#00F3FF] transition-colors">Course Curriculum</a></li>
+                <li><a href="#" className="hover:text-[#00F3FF] transition-colors">Enrollment Portal</a></li>
+                <li><a href="#" className="hover:text-[#00F3FF] transition-colors">Free Resources</a></li>
+              </ul>
             </div>
 
-            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between gap-6">
-                <div class="text-[11px] font-fira text-white/30 uppercase tracking-[0.2em]">
-                    &copy; 2026 NAMAESWAR CYBERSEC. All Rights Reserved.
-                </div>
-                <div class="flex items-center gap-6 text-[10px] font-fira uppercase tracking-widest text-white/20">
-                    <a href="#" class="hover:text-cyber-cyan">Privacy Policy</a>
-                    <a href="#" class="hover:text-cyber-cyan">Terms of Service</a>
-                </div>
+            <div>
+              <h4 className="font-fira font-bold text-white mb-6 uppercase tracking-widest text-sm underline decoration-[#00F3FF] decoration-2 underline-offset-8">Quick Contact</h4>
+              <ul className="space-y-4 text-sm font-fira">
+                <li className="flex items-center space-x-3">
+                  <Activity size={16} className="text-[#00F3FF]" />
+                  <span>academy@namaeswar.tech</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <Lock size={16} className="text-[#00F3FF]" />
+                  <span>Secure Support Portal</span>
+                </li>
+              </ul>
             </div>
+          </div>
+
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-[10px] uppercase font-fira tracking-widest text-gray-600">
+              © 2024 NAMAESWAR CYBERSEC ACADEMY. ALL RIGHTS RESERVED.
+            </p>
+            <div className="flex space-x-6 text-[10px] font-fira text-gray-600 uppercase tracking-widest">
+              <a href="#" className="hover:text-white">Privacy Policy</a>
+              <a href="#" className="hover:text-white">Terms of Protocol</a>
+            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
+    </div>
+  );
+};
 
-    <!-- Scripts -->
-    <script>
-        // Reveal on scroll
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal(); // Trigger on load
-
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuIcon = document.getElementById('menuIcon');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const isOpen = !mobileMenu.classList.contains('hidden');
-            menuIcon.className = isOpen ? 'ph ph-x' : 'ph ph-list';
-        });
-
-        // Typewriter Effect logic can be purely CSS as implemented via ::after, 
-        // but here's a placeholder for future dynamic JS typing.
-    </script>
-</body>
-</html>
+export default HomePage;
