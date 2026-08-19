@@ -4,423 +4,241 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAMAESWAR CYBERSEC | Secure Today, Safe Tomorrow</title>
-    <meta name="description" content="Elite offensive security training and robust vulnerability assessments for the modern digital frontier.">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            black: '#0A0A0A',
-                            cyan: '#00F3FF',
-                            silver: '#C0C0C0',
-                        }
-                    },
-                    fontFamily: {
-                        fira: ['Fira Code', 'monospace'],
-                        inter: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-cyan: #00F3FF;
+            --void-bg: #030303;
         }
-
         body {
-            background-color: #0A0A0A;
-            color: #C0C0C0;
+            background-color: var(--void-bg);
+            color: #E2E2E2;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
-
-        /* Matrix Grid Pattern */
-        .matrix-grid {
-            background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+        .font-fira { font-family: 'Fira Code', monospace; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 243, 255, 0.15);
         }
 
-        /* Glassmorphism */
-        .glass-nav {
-            background: rgba(10, 10, 10, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+        .neon-shadow {
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
         }
 
-        .glass-card {
-            background: rgba(20, 20, 20, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 243, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .hero-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 70%);
         }
 
-        .glass-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
-            background: rgba(0, 243, 255, 0.02);
+        @keyframes pulse-cyan {
+            0%, 100% { border-color: rgba(0, 243, 255, 0.2); box-shadow: 0 0 10px rgba(0, 243, 255, 0); }
+            50% { border-color: rgba(0, 243, 255, 0.8); box-shadow: 0 0 25px rgba(0, 243, 255, 0.3); }
         }
 
-        /* Animations */
-        @keyframes blink {
-            50% { opacity: 0; }
+        .animate-pulse-border {
+            animation: pulse-cyan 3s infinite ease-in-out;
         }
 
-        .cursor-blink::after {
-            content: '_';
-            animation: blink 1s infinite;
-            color: var(--neon-cyan);
+        @keyframes dot-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
 
-        @keyframes rotate-radar {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .status-dot {
+            animation: dot-pulse 2s infinite;
         }
 
-        .animate-radar {
-            animation: rotate-radar 20s linear infinite;
+        .nav-link-hover {
+            position: relative;
         }
-
-        @keyframes pulse-border {
-            0%, 100% { border-color: rgba(0, 243, 255, 0.2); box-shadow: 0 0 0px rgba(0, 243, 255, 0); }
-            50% { border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); }
-        }
-
-        .active-pulse {
-            animation: pulse-border 3s infinite;
-        }
-
-        .neon-text {
-            text-shadow: 0 0 15px rgba(0, 243, 255, 0.7);
-        }
-
-        /* Spinning Graphic Rings */
-        .radar-ring {
+        .nav-link-hover::after {
+            content: '';
             position: absolute;
-            border-radius: 50%;
-            border: 1px dashed rgba(0, 243, 255, 0.3);
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--neon-cyan);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+        .nav-link-hover:hover::after {
+            width: 100%;
         }
 
-        /* Section Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
+            transform: translateY(-2px);
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-track { background: var(--void-bg); }
         ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00F3FF; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
     </style>
 </head>
-<body class="selection:bg-cyber-cyan selection:text-cyber-black">
+<body class="selection:bg-[#00F3FF]/30 selection:text-white">
 
-    <!-- Global Navigation -->
-    <nav class="fixed top-0 w-full z-[100] glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 group">
-                <i class="ph-fill ph-shield-check text-3xl text-cyber-cyan transition-transform duration-700 group-hover:rotate-[360deg]"></i>
-                <div class="font-fira font-bold text-xl tracking-tighter">
+    <!-- Fixed Glass Navigation -->
+    <nav class="fixed top-0 w-full z-[100] px-6 py-4 transition-all duration-300 border-b border-white/5 backdrop-blur-xl bg-black/20">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2 group cursor-pointer">
+                <i class="ph ph-shield-check text-[#00F3FF] text-3xl transition-transform duration-500 group-hover:rotate-12"></i>
+                <span class="font-fira font-bold text-xl tracking-tighter uppercase">
                     <span class="text-white">NAMAESWAR</span>
-                    <span class="text-cyber-cyan neon-text">CYBERSEC</span>
-                </div>
-            </a>
-
-            <!-- Desktop Nav -->
-            <div class="hidden lg:flex items-center gap-8 font-fira text-[13px] uppercase tracking-[0.2em]">
-                <a href="index.html" class="text-cyber-cyan border-b border-cyber-cyan">Home</a>
-                <a href="academy.html" class="text-white hover:text-cyber-cyan transition-colors">Academy</a>
-                <a href="services.html" class="text-white hover:text-cyber-cyan transition-colors">Services</a>
-                <a href="about.html" class="text-white hover:text-cyber-cyan transition-colors">About Us</a>
-                <a href="contact.html" class="text-white hover:text-cyber-cyan transition-colors">Contact</a>
+                    <span class="text-[#00F3FF] neon-shadow">CYBERSEC</span>
+                </span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-10 font-fira text-xs uppercase tracking-widest">
+                <a href="#academy" class="nav-link-hover text-gray-400 hover:text-[#00F3FF] transition-colors">Academy</a>
+                <a href="#services" class="nav-link-hover text-gray-400 hover:text-[#00F3FF] transition-colors">Services</a>
+                <a href="#contact" class="nav-link-hover text-gray-400 hover:text-[#00F3FF] transition-colors">Contact Us</a>
             </div>
 
-            <!-- Mobile Menu Btn -->
-            <button class="lg:hidden text-cyber-cyan text-3xl" id="menuBtn">
-                <i class="ph ph-list" id="menuIcon"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Drawer -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-cyber-black/95 backdrop-blur-xl border-b border-cyber-cyan/20 px-6 py-10 space-y-6">
-            <a href="index.html" class="block font-fira text-lg text-cyber-cyan uppercase tracking-widest">Home</a>
-            <a href="academy.html" class="block font-fira text-lg text-white uppercase tracking-widest">Academy</a>
-            <a href="services.html" class="block font-fira text-lg text-white uppercase tracking-widest">Services</a>
-            <a href="about.html" class="block font-fira text-lg text-white uppercase tracking-widest">About Us</a>
-            <a href="contact.html" class="block font-fira text-lg text-white uppercase tracking-widest">Contact</a>
+            <div class="md:hidden">
+                <button class="text-white text-2xl"><i class="ph ph-list"></i></button>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <div class="matrix-grid absolute inset-0 z-0 opacity-40"></div>
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 hero-glow"></div>
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-[#00F3FF]/5 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#00F3FF]/5 blur-[120px] rounded-full"></div>
         
-        <!-- Background Radial Orb -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyber-cyan/5 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
-            <div class="space-y-8">
-                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 text-[11px] font-fira tracking-[0.2em] text-cyber-cyan">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-cyan opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyber-cyan"></span>
-                    </span>
-                    Initializing Secure Protocol v2.0
-                </div>
-
-                <h1 class="text-5xl lg:text-7xl font-fira font-bold text-white leading-tight">
-                    NAMAESWAR <br>
-                    <span class="text-cyber-cyan neon-text cursor-blink">CYBERSEC</span>
-                </h1>
-
-                <p class="text-lg md:text-xl font-light text-cyber-silver leading-relaxed max-w-xl">
-                    SECURE TODAY, SAFE TOMORROW. <br class="hidden md:block"> Providing elite offensive security training and robust vulnerability assessments for the modern digital frontier.
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-6 pt-4">
-                    <a href="academy.html" class="group relative px-10 py-4 bg-cyber-cyan text-cyber-black font-fira font-bold text-sm tracking-widest uppercase overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(0,243,255,0.6)]">
-                        Explore Academy
-                    </a>
-                    <a href="services.html" class="px-10 py-4 border border-cyber-cyan text-cyber-cyan font-fira font-bold text-sm tracking-widest uppercase hover:bg-cyber-cyan/10 transition-all">
-                        Our Services
-                    </a>
-                </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <div class="glass px-4 py-2 rounded-full mb-8 inline-flex items-center gap-3">
+                <span class="w-2 h-2 bg-[#00F3FF] rounded-full status-dot shadow-[0_0_8px_#00F3FF]"></span>
+                <span class="font-fira text-[10px] tracking-[0.2em] text-[#00F3FF] uppercase font-bold">● Initializing Secure Protocol V2.0</span>
             </div>
 
-            <!-- Radar Tech Graphic -->
-            <div class="hidden lg:flex justify-center items-center h-[500px] relative">
-                <div class="radar-ring w-[400px] h-[400px] border-dashed border-cyber-cyan/20 animate-radar"></div>
-                <div class="radar-ring w-[300px] h-[300px] border-solid border-cyber-cyan/10 animate-radar" style="animation-direction: reverse; animation-duration: 15s;"></div>
-                <div class="radar-ring w-[200px] h-[200px] border-dashed border-cyber-cyan/40 animate-radar"></div>
-                
-                <div class="relative z-10 w-32 h-32 bg-cyber-black border border-cyber-cyan rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(0,243,255,0.2)]">
-                    <i class="ph-fill ph-cpu text-6xl text-cyber-cyan animate-pulse"></i>
-                </div>
+            <h1 class="text-5xl md:text-8xl font-inter font-extrabold tracking-tighter leading-none mb-6">
+                <span class="block text-white">SECURE TODAY,</span>
+                <span class="block bg-gradient-to-r from-white to-[#00F3FF] bg-clip-text text-transparent italic">SAFE TOMORROW</span>
+            </h1>
 
-                <!-- Floating Data Points -->
-                <div class="absolute top-10 right-10 p-3 glass-card rounded-lg text-[10px] font-fira border-cyber-cyan/20">
-                    <div class="text-cyber-cyan">ENCRYPTION: ACTIVE</div>
-                    <div class="text-white/40">AES-256-GCM</div>
-                </div>
-                <div class="absolute bottom-10 left-10 p-3 glass-card rounded-lg text-[10px] font-fira border-cyber-cyan/20">
-                    <div class="text-cyber-cyan">TRAFFIC: SECURED</div>
-                    <div class="text-white/40">NODE_ID: 7421X</div>
-                </div>
+            <p class="max-w-2xl text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-10">
+                Pioneering elite offensive security training and battlefield-proven VAPT assessments to fortify your digital infrastructure against advanced persistent threats.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6">
+                <a href="#academy" class="btn-glow px-10 py-5 bg-[#00F3FF] text-black font-fira font-bold uppercase text-xs tracking-widest rounded-sm transition-all duration-300 flex items-center gap-3">
+                    Explore Academy <i class="ph ph-arrow-right font-bold"></i>
+                </a>
+                <a href="#services" class="px-10 py-5 border border-[#00F3FF]/30 text-white font-fira font-bold uppercase text-xs tracking-widest rounded-sm transition-all duration-300 hover:bg-[#00F3FF]/10">
+                    Our Services
+                </a>
             </div>
         </div>
     </header>
 
     <!-- Tactical Operations Section -->
-    <section id="tactical" class="py-32 relative bg-[#0D0D0D]/50">
+    <section id="academy" class="py-32 relative">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-20 text-center lg:text-left reveal">
-                <div class="flex items-center gap-4 mb-4 justify-center lg:justify-start">
-                    <div class="h-[1px] w-12 bg-cyber-cyan"></div>
-                    <span class="font-fira text-cyber-cyan text-xs tracking-[0.4em] uppercase">Core Methodology</span>
-                </div>
-                <h2 class="text-4xl md:text-5xl font-fira font-bold text-white uppercase tracking-tighter">
-                    Tactical <span class="text-cyber-cyan neon-text">Operations</span>
-                </h2>
-                <p class="mt-6 text-cyber-silver max-w-2xl font-light leading-relaxed">
-                    Our ecosystem is built on the principle of continuous offensive-defensive evolution. We provide the tools and the training to survive the next generation of cyber warfare.
-                </p>
+            <div class="mb-20">
+                <h2 class="font-fira text-[#00F3FF] text-xs uppercase tracking-[0.5em] font-bold mb-4">Core Competencies</h2>
+                <h3 class="text-4xl md:text-5xl font-inter font-bold text-white uppercase tracking-tighter">Tactical <span class="text-[#00F3FF]">Operations</span></h3>
+                <div class="h-1 w-20 bg-[#00F3FF] mt-6"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1 -->
-                <div class="glass-card active-pulse p-8 rounded-2xl flex flex-col group reveal">
-                    <div class="w-14 h-14 bg-cyber-cyan/10 rounded-xl flex items-center justify-center text-cyber-cyan text-3xl mb-8 group-hover:bg-cyber-cyan transition-colors group-hover:text-cyber-black">
-                        <i class="ph-bold ph-graduation-cap"></i>
+                <!-- Card 1 (Active) -->
+                <div class="glass p-8 rounded-3xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,243,255,0.25)] animate-pulse-border">
+                    <div class="w-14 h-14 rounded-2xl bg-[#00F3FF]/10 flex items-center justify-center mb-8 border border-[#00F3FF]/20 group-hover:scale-110 transition-transform">
+                        <i class="ph ph-graduation-cap text-[#00F3FF] text-3xl"></i>
                     </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">1-Month Bootcamp</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Practical-only learning covering OSI Model, TCP/IP, and OWASP Top 10 vulnerabilities. No fluff, just results.
-                    </p>
-                    <div class="mt-8 flex items-center gap-2 text-cyber-cyan font-fira text-[10px] uppercase tracking-widest">
-                        <span class="w-1.5 h-1.5 bg-cyber-cyan rounded-full"></span> Live Enrollment
+                    <h4 class="font-fira font-bold text-white text-xl mb-4 uppercase">1-Month Bootcamp</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-6">Practical-only curriculum covering OSI, TCP/IP, and OWASP Top 10 vulnerabilities. Hand-on exploitation labs.</p>
+                    <div class="flex items-center gap-2 text-[#00F3FF] font-fira text-[10px] font-bold tracking-widest uppercase">
+                        <span class="w-1.5 h-1.5 bg-[#00F3FF] rounded-full"></span> Active Now
                     </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col group opacity-60 reveal">
-                    <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-cyber-silver text-3xl mb-8">
-                        <i class="ph-bold ph-terminal-window"></i>
+                <!-- Card 2 (Upcoming) -->
+                <div class="glass p-8 rounded-3xl opacity-40 group transition-all duration-500 hover:opacity-80">
+                    <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/5">
+                        <i class="ph ph-terminal-window text-gray-500 text-3xl"></i>
                     </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">Upcoming Academy</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Advanced VAPT modules, specialized Red Teaming operations, and Kernel exploitation pathways.
-                    </p>
-                    <div class="mt-8 text-white/30 font-fira text-[10px] uppercase tracking-widest">
-                        Status: In Development
+                    <h4 class="font-fira font-bold text-gray-300 text-xl mb-4 uppercase">Upcoming Academy</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-6">Advanced tiered modules: VAPT mastery, specialized Red Teaming operations, and kernel level security.</p>
+                    <span class="font-fira text-[10px] text-gray-500 tracking-widest uppercase">Initializing...</span>
+                </div>
+
+                <!-- Card 3 (Active) -->
+                <div class="glass p-8 rounded-3xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,243,255,0.25)]">
+                    <div class="w-14 h-14 rounded-2xl bg-[#00F3FF]/10 flex items-center justify-center mb-8 border border-[#00F3FF]/20 group-hover:scale-110 transition-transform">
+                        <i class="ph ph-shield-search text-[#00F3FF] text-3xl"></i>
+                    </div>
+                    <h4 class="font-fira font-bold text-white text-xl mb-4 uppercase">VAPT Assessment</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-6">Professional Penetration Testing for web, network, and cloud infrastructure. Complete audit reports.</p>
+                    <div class="flex items-center gap-2 text-[#00F3FF] font-fira text-[10px] font-bold tracking-widest uppercase">
+                        <span class="w-1.5 h-1.5 bg-[#00F3FF] rounded-full"></span> Live Service
                     </div>
                 </div>
 
-                <!-- Card 3 -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col group reveal">
-                    <div class="w-14 h-14 bg-cyber-cyan/10 rounded-xl flex items-center justify-center text-cyber-cyan text-3xl mb-8 group-hover:bg-cyber-cyan transition-colors group-hover:text-cyber-black">
-                        <i class="ph-bold ph-shield-search"></i>
+                <!-- Card 4 (Upcoming) -->
+                <div class="glass p-8 rounded-3xl opacity-40 group transition-all duration-500 hover:opacity-80">
+                    <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/5">
+                        <i class="ph ph-hard-drives text-gray-500 text-3xl"></i>
                     </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">VAPT Assessment</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Professional-grade Vulnerability Assessment & Penetration Testing to harden your organizational assets.
-                    </p>
-                    <a href="services.html" class="mt-8 flex items-center gap-2 text-cyber-cyan font-fira text-[10px] uppercase tracking-widest hover:underline">
-                        Inquire Protocol <i class="ph ph-arrow-right"></i>
-                    </a>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="glass-card p-8 rounded-2xl flex flex-col group opacity-60 reveal">
-                    <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-cyber-silver text-3xl mb-8">
-                        <i class="ph-bold ph-hard-drives"></i>
-                    </div>
-                    <h3 class="font-fira font-bold text-white text-xl mb-4">IT Consultancy</h3>
-                    <p class="text-sm text-cyber-silver leading-relaxed flex-grow">
-                        Managed SOC services, infrastructure audit, and high-performance cloud security architecture.
-                    </p>
-                    <div class="mt-8 text-white/30 font-fira text-[10px] uppercase tracking-widest">
-                        Status: Pipeline stage
-                    </div>
+                    <h4 class="font-fira font-bold text-gray-300 text-xl mb-4 uppercase">IT Consultancy</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-6">Next-gen Managed SOC services, architecture reviews, and high-performance cloud security roadmaps.</p>
+                    <span class="font-fira text-[10px] text-gray-500 tracking-widest uppercase">In Pipeline</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Professional Footer -->
-    <footer class="bg-cyber-black pt-24 pb-12 border-t border-cyber-cyan/10">
+    <!-- Professional Minimal Footer -->
+    <footer id="contact" class="py-20 border-t border-white/5 bg-black/40">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
-                <div class="space-y-6">
-                    <div class="flex items-center gap-3">
-                        <i class="ph-fill ph-shield-check text-3xl text-cyber-cyan"></i>
-                        <div class="font-fira font-bold text-lg text-white">
-                            NAMAESWAR <span class="text-cyber-cyan">CYBERSEC</span>
-                        </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-2 justify-center md:justify-start">
+                        <i class="ph ph-shield-check text-[#00F3FF] text-2xl"></i>
+                        <span class="font-fira font-bold text-lg text-white tracking-widest uppercase">NAMAESWAR <span class="text-[#00F3FF]">CYBERSEC</span></span>
                     </div>
-                    <p class="text-cyber-silver/60 text-sm leading-relaxed font-light">
-                        The ultimate destination for offensive security education and enterprise vulnerability management.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-cyber-cyan hover:border-cyber-cyan transition-all">
-                            <i class="ph-bold ph-instagram-logo"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-cyber-cyan hover:border-cyber-cyan transition-all">
-                            <i class="ph-bold ph-youtube-logo"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-cyber-cyan hover:border-cyber-cyan transition-all">
-                            <i class="ph-bold ph-linkedin-logo"></i>
-                        </a>
-                    </div>
+                    <p class="text-xs text-gray-500 font-fira uppercase tracking-widest">Secure Today, Safe Tomorrow.</p>
                 </div>
 
-                <div>
-                    <h4 class="font-fira font-bold text-white text-sm uppercase tracking-widest mb-8">Navigation</h4>
-                    <ul class="space-y-4 text-cyber-silver/50 text-[13px] font-light">
-                        <li><a href="index.html" class="hover:text-cyber-cyan transition-colors">Home</a></li>
-                        <li><a href="academy.html" class="hover:text-cyber-cyan transition-colors">Academy</a></li>
-                        <li><a href="services.html" class="hover:text-cyber-cyan transition-colors">Services</a></li>
-                        <li><a href="about.html" class="hover:text-cyber-cyan transition-colors">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-cyber-cyan transition-colors">Contact</a></li>
-                    </ul>
+                <div class="flex gap-10 font-fira text-[10px] uppercase tracking-widest text-gray-500">
+                    <a href="#" class="hover:text-[#00F3FF] hover:neon-shadow transition-all">Instagram</a>
+                    <a href="#" class="hover:text-[#00F3FF] hover:neon-shadow transition-all">YouTube</a>
+                    <a href="#" class="hover:text-[#00F3FF] hover:neon-shadow transition-all">Twitter</a>
                 </div>
 
-                <div>
-                    <h4 class="font-fira font-bold text-white text-sm uppercase tracking-widest mb-8">Protocol</h4>
-                    <ul class="space-y-4 text-cyber-silver/50 text-[13px] font-light">
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Course Portal</a></li>
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Client login</a></li>
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Security Audit</a></li>
-                        <li><a href="#" class="hover:text-cyber-cyan transition-colors">Pentest Report</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-fira font-bold text-white text-sm uppercase tracking-widest mb-8">System Info</h4>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
-                        <div class="flex justify-between text-[10px] font-fira">
-                            <span class="text-white/40">Uptime:</span>
-                            <span class="text-cyber-cyan">99.98%</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] font-fira">
-                            <span class="text-white/40">Latency:</span>
-                            <span class="text-cyber-cyan">14ms</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] font-fira">
-                            <span class="text-white/40">Encryption:</span>
-                            <span class="text-cyber-cyan">AES-256</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between gap-6">
-                <div class="text-[11px] font-fira text-white/30 uppercase tracking-[0.2em]">
-                    &copy; 2026 NAMAESWAR CYBERSEC. All Rights Reserved.
-                </div>
-                <div class="flex items-center gap-6 text-[10px] font-fira uppercase tracking-widest text-white/20">
-                    <a href="#" class="hover:text-cyber-cyan">Privacy Policy</a>
-                    <a href="#" class="hover:text-cyber-cyan">Terms of Service</a>
+                <div class="text-[10px] font-fira text-gray-600 uppercase tracking-widest">
+                    © 2026 NAMAESWAR CYBERSEC. ALL RIGHTS RESERVED.
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
-        // Reveal on scroll
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
+        // Smooth reveal logic
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal(); // Trigger on load
+            });
+        }, observerOptions);
 
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuIcon = document.getElementById('menuIcon');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const isOpen = !mobileMenu.classList.contains('hidden');
-            menuIcon.className = isOpen ? 'ph ph-x' : 'ph ph-list';
+        document.querySelectorAll('.glass').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
         });
-
-        // Typewriter Effect logic can be purely CSS as implemented via ::after, 
-        // but here's a placeholder for future dynamic JS typing.
     </script>
 </body>
 </html>
