@@ -3,28 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namaeswar Cybersec | Secure Today, Safe Tomorrow</title>
-    <meta name="description" content="Advanced Cyber Security Academy and VAPT Services">
+    <title>NAMAESWAR CYBERSEC | Secure Today, Safe Tomorrow</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        dark: '#0A0A0A',
-                        neon: '#00F3FF',
-                        silver: '#C0C0C0',
+                        cyberblack: '#0A0A0A',
+                        neoncyan: '#00F3FF',
+                        silvergray: '#C0C0C0',
                     },
                     fontFamily: {
                         fira: ['Fira Code', 'monospace'],
@@ -35,19 +30,11 @@
         }
     </script>
 
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <style>
-        :root {
-            --neon: #00F3FF;
-            --dark: #0A0A0A;
-        }
-
-        body {
-            background-color: var(--dark);
-            color: #C0C0C0;
-            overflow-x: hidden;
-        }
-
-        /* Matrix/Grid Background */
+        /* Matrix Grid Background */
         .matrix-bg {
             background-image: 
                 linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
@@ -68,299 +55,280 @@
 
         .neon-border:hover {
             box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
-            border-color: var(--neon);
+            border-color: #00F3FF;
         }
 
-        .btn-neon {
-            background: var(--neon);
-            color: var(--dark);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
-            transition: all 0.3s ease;
+        /* Pulsing Animation */
+        @keyframes pulse-neon {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); border-color: rgba(0, 243, 255, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(0, 243, 255, 0.6); border-color: #00F3FF; }
+        }
+        .animate-pulse-neon {
+            animation: pulse-neon 2s infinite ease-in-out;
         }
 
-        .btn-neon:hover {
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.8);
-            transform: translateY(-2px);
-        }
-
-        /* Spinning Tech Shield */
-        .shield-container {
-            perspective: 1000px;
-        }
-
-        .spinning-shield {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            transform-style: preserve-3d;
-            animation: rotate3d 15s linear infinite;
-        }
-
-        @keyframes rotate3d {
-            from { transform: rotateY(0deg) rotateX(20deg); }
-            to { transform: rotateY(360deg) rotateX(20deg); }
-        }
-
-        .ring {
-            position: absolute;
-            border: 2px solid var(--neon);
+        /* Spinning Tech Graphic */
+        .tech-ring {
+            border: 2px dashed #00F3FF;
             border-radius: 50%;
-            opacity: 0.3;
+            position: absolute;
+            animation: spin 15s linear infinite;
         }
 
-        .ring-1 { inset: 0; animation: pulse 4s infinite; }
-        .ring-2 { inset: 20px; border-style: dashed; animation: rotateCW 10s linear infinite; }
-        .ring-3 { inset: 40px; border-width: 4px; border-color: rgba(0, 243, 255, 0.1); }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-        @keyframes rotateCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.2; } 50% { transform: scale(1.05); opacity: 0.5; } }
+        @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
 
-        /* Glassmorphism */
+        .tech-ring-inner {
+            border: 2px solid rgba(0, 243, 255, 0.2);
+            border-top: 2px solid #00F3FF;
+            border-radius: 50%;
+            animation: spin-reverse 8s linear infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F3FF; }
+
         .glass {
             background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--dark); }
-        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--neon); }
-
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="font-inter">
+<body class="bg-cyberblack text-silvergray font-inter selection:bg-neoncyan selection:text-cyberblack">
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-6 border-b border-transparent">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 flex items-center justify-center text-neon">
-                    <!-- PASTE LOGO SVG HERE -->
-                    <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
-                        <path d="M208,40H48A16,16,0,0,0,32,56v144a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40Zm0,160H48V56H208V200ZM160,128a32,32,0,1,1-32-32A32,32,0,0,1,160,128Z"></path>
-                    </svg>
+            <div class="flex items-center gap-3 group">
+                <!-- PASTE LOGO SVG HERE -->
+                <div class="w-10 h-10 flex items-center justify-center bg-neoncyan/10 rounded-lg border border-neoncyan/30 group-hover:rotate-[360deg] transition-all duration-700">
+                    <i class="ph ph-shield-checkered text-neoncyan text-2xl"></i>
                 </div>
-                <span class="font-fira font-bold text-white tracking-tighter text-xl hidden sm:block">
-                    NAMAESWAR <span class="text-neon">CYBERSEC</span>
+                <span class="font-fira font-bold text-xl tracking-tighter text-white uppercase">
+                    NAMAESWAR <span class="text-neoncyan neon-text">CYBERSEC</span>
                 </span>
-            </a>
+            </div>
 
-            <!-- Desktop Links -->
-            <div class="hidden md:flex items-center gap-8 font-fira text-sm uppercase tracking-widest">
-                <a href="#home" class="text-white hover:text-neon transition-colors">Home</a>
-                <a href="#academy" class="hover:text-neon transition-colors">Academy</a>
-                <a href="#services" class="hover:text-neon transition-colors">Services</a>
-                <a href="#about" class="hover:text-neon transition-colors">About</a>
-                <a href="#contact" class="hover:text-neon transition-colors">Contact</a>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex gap-8 items-center font-fira text-xs uppercase tracking-widest">
+                <a href="#home" class="text-white hover:text-neoncyan transition-colors">Home</a>
+                <a href="#academy" class="hover:text-neoncyan transition-colors">Academy</a>
+                <a href="#services" class="hover:text-neoncyan transition-colors">Services</a>
+                <a href="#about" class="hover:text-neoncyan transition-colors">About Us</a>
+                <a href="#contact" class="hover:text-neoncyan transition-colors">Contact Us</a>
             </div>
 
             <!-- Mobile Toggle -->
-            <button class="md:hidden text-neon text-3xl" onclick="toggleMenu()">
-                <i class="ph ph-list" id="menu-icon"></i>
+            <button class="md:hidden text-neoncyan text-3xl" id="menu-btn">
+                <i class="ph ph-list"></i>
             </button>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-neon/20 flex-col items-center py-8 gap-6 md:hidden">
-            <a href="#home" onclick="toggleMenu()" class="hover:text-neon transition-colors">Home</a>
-            <a href="#academy" onclick="toggleMenu()" class="hover:text-neon transition-colors">Academy</a>
-            <a href="#services" onclick="toggleMenu()" class="hover:text-neon transition-colors">Services</a>
-            <a href="#about" onclick="toggleMenu()" class="hover:text-neon transition-colors">About</a>
-            <a href="#contact" onclick="toggleMenu()" class="hover:text-neon transition-colors">Contact</a>
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-neoncyan/20 p-6 flex flex-col gap-6 font-fira text-sm uppercase tracking-widest md:hidden">
+            <a href="#home" class="mobile-link">Home</a>
+            <a href="#academy" class="mobile-link">Academy</a>
+            <a href="#services" class="mobile-link">Services</a>
+            <a href="#about" class="mobile-link">About Us</a>
+            <a href="#contact" class="mobile-link">Contact Us</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <div class="matrix-bg absolute inset-0 z-0"></div>
+        <div class="matrix-bg absolute inset-0 z-0 opacity-40"></div>
         
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10 w-full">
-            <div class="reveal">
-                <div class="inline-block px-3 py-1 border border-neon/30 rounded-full bg-neon/5 text-neon text-xs font-fira mb-6">
-                    <span class="animate-pulse">●</span> SYSTEM_READY_V1.0
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10 w-full">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-neoncyan/10 border border-neoncyan/30 rounded-full">
+                    <span class="w-2 h-2 bg-neoncyan rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-fira tracking-widest text-neoncyan uppercase">Initializing Secure Protocol v2.0</span>
                 </div>
-                <h1 class="text-5xl lg:text-7xl font-fira font-bold text-white mb-4 leading-tight">
-                    NAMAESWAR <br>
-                    <span class="text-neon neon-text uppercase">Cybersec</span>
-                </h1>
-                <h2 class="text-xl md:text-2xl font-light text-silver/80 mb-10 font-fira">
-                    SECURE TODAY, SAFE TOMORROW.
-                </h2>
                 
-                <div class="flex flex-wrap gap-6">
-                    <a href="#academy" class="btn-neon px-8 py-4 rounded-sm font-fira font-bold text-sm tracking-tighter">
+                <h1 class="text-5xl lg:text-7xl font-fira font-bold text-white leading-tight">
+                    NAMAESWAR <br>
+                    <span class="text-neoncyan neon-text">CYBERSEC</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl font-light text-silvergray max-w-lg leading-relaxed">
+                    SECURE TODAY, SAFE TOMORROW. <br>
+                    <span class="opacity-70 text-base">Elite offensive security training and robust vulnerability assessments for the digital age.</span>
+                </p>
+
+                <div class="flex flex-wrap gap-6 pt-4">
+                    <a href="#academy" class="px-8 py-4 bg-neoncyan text-cyberblack font-fira font-bold text-sm rounded shadow-[0_0_20px_rgba(0,243,255,0.4)] hover:shadow-[0_0_35px_rgba(0,243,255,0.6)] transition-all transform hover:-translate-y-1">
                         EXPLORE ACADEMY
                     </a>
-                    <a href="#services" class="px-8 py-4 border border-neon/50 text-neon rounded-sm font-fira font-bold text-sm hover:bg-neon/10 transition-all tracking-tighter">
+                    <a href="#services" class="px-8 py-4 border border-neoncyan/50 text-neoncyan font-fira font-bold text-sm rounded hover:bg-neoncyan/10 transition-all transform hover:-translate-y-1">
                         OUR SERVICES
                     </a>
                 </div>
             </div>
 
-            <div class="hidden md:flex justify-center items-center shield-container reveal" style="transition-delay: 200ms;">
-                <div class="spinning-shield flex items-center justify-center">
-                    <div class="ring ring-1"></div>
-                    <div class="ring ring-2"></div>
-                    <div class="ring ring-3"></div>
-                    <div class="text-neon/80 text-8xl">
-                        <i class="ph ph-shield-checkered"></i>
-                    </div>
-                    <!-- Decorative scanning line -->
-                    <div class="absolute inset-0 overflow-hidden rounded-full">
-                        <div class="w-full h-1 bg-neon/40 blur-sm absolute animate-[scan_3s_linear_infinite]"></div>
-                    </div>
+            <div class="hidden md:flex justify-center items-center relative h-[500px]">
+                <div class="tech-ring w-[350px] h-[350px]"></div>
+                <div class="tech-ring-inner w-[280px] h-[280px]"></div>
+                <div class="absolute w-[200px] h-[200px] bg-neoncyan/5 rounded-full flex items-center justify-center backdrop-blur-sm border border-neoncyan/10">
+                    <i class="ph ph-cpu text-neoncyan text-8xl opacity-80 animate-pulse"></i>
                 </div>
+                <!-- Decorative scanning line -->
+                <div class="absolute w-[400px] h-[2px] bg-gradient-to-r from-transparent via-neoncyan/40 to-transparent top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-[bounce_4s_infinite]"></div>
             </div>
         </div>
     </section>
 
-    <!-- Academy & Services Grid -->
-    <section id="academy" class="py-24 relative">
+    <!-- Tactical Operations Section -->
+    <section id="academy" class="py-24 relative bg-[#0D0D0D]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-16 reveal">
-                <p class="font-fira text-neon text-sm mb-2">&gt; _OPERATIONAL_UNITS</p>
-                <h3 class="text-4xl font-fira font-bold text-white uppercase tracking-tight">Our Core Ecosystem</h3>
+            <div class="mb-16">
+                <span class="font-fira text-neoncyan text-xs tracking-[0.3em] uppercase underline underline-offset-8 decoration-neoncyan/30">Operational Units</span>
+                <h2 class="text-4xl md:text-5xl font-fira font-bold text-white mt-6 uppercase">Tactical <span class="text-neoncyan">Operations</span></h2>
+                <p class="text-silvergray mt-4 opacity-60">Advanced education and protection services for sovereign security.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1: Academy Main -->
-                <div class="neon-border glass p-8 rounded-xl transition-all duration-500 hover:-translate-y-2 group reveal">
-                    <div class="w-14 h-14 bg-neon/10 rounded-lg flex items-center justify-center text-neon text-3xl mb-6 group-hover:scale-110 transition-transform">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1: 1-Month Bootcamp -->
+                <div class="p-8 bg-[#111] rounded-xl flex flex-col h-full animate-pulse-neon border border-neoncyan/30 group transition-all duration-500">
+                    <div class="w-12 h-12 bg-neoncyan/20 rounded flex items-center justify-center text-neoncyan text-2xl mb-6 group-hover:scale-110 transition-transform">
                         <i class="ph ph-graduation-cap"></i>
                     </div>
-                    <span class="text-[10px] font-fira text-neon tracking-[0.2em] uppercase mb-2 block">Bootcamp</span>
-                    <h4 class="text-xl font-fira font-bold text-white mb-4">1-Month Bootcamp</h4>
-                    <p class="text-sm text-silver/70 leading-relaxed mb-6">
-                        Intensive hands-on training focusing on OSI, TCP/IP, and OWASP Top 10. Practical exploitation.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-[9px] px-2 py-1 bg-white/5 rounded border border-white/10 uppercase">Network</span>
-                        <span class="text-[9px] px-2 py-1 bg-white/5 rounded border border-white/10 uppercase">Web</span>
+                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">1-Month Bootcamp</h3>
+                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Practical-only learning: OSI Model, TCP/IP, and OWASP Top 10 vulnerabilities. No fluff, just results.</p>
+                    <div class="mt-8 flex items-center gap-2 text-neoncyan text-[10px] font-fira font-bold tracking-widest uppercase">
+                        <span class="w-2 h-2 bg-neoncyan rounded-full"></span> Active Enrollment
                     </div>
                 </div>
 
-                <!-- Card 2: Academy Upcoming -->
-                <div class="glass border border-white/10 p-8 rounded-xl transition-all duration-500 hover:border-white/30 reveal" style="transition-delay: 100ms;">
-                    <div class="w-14 h-14 bg-white/5 rounded-lg flex items-center justify-center text-silver/40 text-3xl mb-6">
-                        <i class="ph ph-terminal-window"></i>
+                <!-- Card 2: Upcoming Academy -->
+                <div class="p-8 bg-[#0F0F0F] rounded-xl flex flex-col h-full border border-white/5 opacity-60 group hover:opacity-100 hover:border-neoncyan/30 transition-all duration-500">
+                    <div class="w-12 h-12 bg-white/5 rounded flex items-center justify-center text-silvergray text-2xl mb-6">
+                        <i class="ph ph-terminal"></i>
                     </div>
-                    <span class="text-[10px] font-fira text-silver/40 tracking-[0.2em] uppercase mb-2 block">Advanced</span>
-                    <h4 class="text-xl font-fira font-bold text-silver/60 mb-4">Upcoming: Adv VAPT</h4>
-                    <p class="text-sm text-silver/40 leading-relaxed">
-                        Deep dive into exploit development, advanced privilege escalation, and custom automation.
-                    </p>
+                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">Upcoming Academy</h3>
+                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Advanced VAPT modules, Red Teaming Operations, and Malware Analysis pathways in development.</p>
+                    <div class="mt-8 text-silvergray/40 text-[10px] font-fira font-bold tracking-widest uppercase italic">
+                        Coming Soon
+                    </div>
                 </div>
 
                 <!-- Card 3: VAPT Services -->
-                <div id="services" class="neon-border glass p-8 rounded-xl transition-all duration-500 hover:-translate-y-2 group reveal" style="transition-delay: 200ms;">
-                    <div class="w-14 h-14 bg-neon/10 rounded-lg flex items-center justify-center text-neon text-3xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="ph ph-shield-plus"></i>
+                <div id="services" class="p-8 bg-[#111] rounded-xl flex flex-col h-full border border-white/10 group hover:-translate-y-2 neon-border transition-all duration-500">
+                    <div class="w-12 h-12 bg-neoncyan/10 rounded flex items-center justify-center text-neoncyan text-2xl mb-6 group-hover:rotate-12 transition-transform">
+                        <i class="ph ph-shield-check"></i>
                     </div>
-                    <span class="text-[10px] font-fira text-neon tracking-[0.2em] uppercase mb-2 block">Professional</span>
-                    <h4 class="text-xl font-fira font-bold text-white mb-4">VAPT Assessment</h4>
-                    <p class="text-sm text-silver/70 leading-relaxed mb-6">
-                        Complete security audit, pentesting, and remediation reports for organizations and apps.
-                    </p>
-                    <div class="flex items-center gap-2 text-neon text-xs font-bold font-fira">
-                        <span class="w-2 h-2 rounded-full bg-neon animate-ping"></span> LIVE OPS
+                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">VAPT Assessment</h3>
+                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Professional-grade Penetration Testing. We find the holes before adversaries do.</p>
+                    <div class="mt-8 flex items-center gap-2 text-neoncyan text-[10px] font-fira font-bold tracking-widest uppercase cursor-pointer group-hover:underline">
+                        Inquire Service <i class="ph ph-arrow-right"></i>
                     </div>
                 </div>
 
-                <!-- Card 4: Services Upcoming -->
-                <div class="glass border border-white/10 p-8 rounded-xl transition-all duration-500 hover:border-white/30 reveal" style="transition-delay: 300ms;">
-                    <div class="w-14 h-14 bg-white/5 rounded-lg flex items-center justify-center text-silver/40 text-3xl mb-6">
-                        <i class="ph ph-database"></i>
+                <!-- Card 4: IT Consultancy -->
+                <div class="p-8 bg-[#0F0F0F] rounded-xl flex flex-col h-full border border-white/5 opacity-60 group hover:opacity-100 hover:border-neoncyan/30 transition-all duration-500">
+                    <div class="w-12 h-12 bg-white/5 rounded flex items-center justify-center text-silvergray text-2xl mb-6">
+                        <i class="ph ph-hard-drives"></i>
                     </div>
-                    <span class="text-[10px] font-fira text-silver/40 tracking-[0.2em] uppercase mb-2 block">Consultancy</span>
-                    <h4 class="text-xl font-fira font-bold text-silver/60 mb-4">Upcoming: Consultancy</h4>
-                    <p class="text-sm text-silver/40 leading-relaxed">
-                        Architecture reviews, cloud security, and compliance advisory for startups and enterprises.
-                    </p>
+                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">IT Consultancy</h3>
+                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Managed SOC services, Cloud Security Architecture, and Strategic Compliance advisory.</p>
+                    <div class="mt-8 text-silvergray/40 text-[10px] font-fira font-bold tracking-widest uppercase italic">
+                        Pipeline Stage
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="bg-black py-12 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="font-fira font-bold text-white">NAMAESWAR <span class="text-neon">CYBERSEC</span></span>
-                    </div>
-                    <p class="text-xs text-silver/40 font-fira tracking-widest uppercase">© 2024 Namaeswar Cybersec. Secure your future.</p>
-                </div>
+    <footer id="contact" class="py-16 border-t border-white/5 relative bg-cyberblack overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+            <div class="space-y-4 max-w-xs">
+                <span class="font-fira font-bold text-white text-lg">NAMAESWAR <span class="text-neoncyan">CYBERSEC</span></span>
+                <p class="text-xs opacity-50 leading-relaxed">Pioneering ethical security methodologies for organizations that refuse to be compromised.</p>
+            </div>
 
-                <div class="flex gap-6 items-center">
-                    <a href="https://instagram.com/NamaeswarCybersecOfficial" target="_blank" class="text-2xl text-silver hover:text-neon transition-all">
+            <div class="flex flex-col gap-6">
+                <h4 class="font-fira text-xs font-bold uppercase text-white tracking-widest">Connect to Network</h4>
+                <div class="flex gap-6 justify-center">
+                    <a href="https://instagram.com/NamaeswarCybersecOfficial" target="_blank" class="text-3xl hover:text-neoncyan hover:scale-110 transition-all">
                         <i class="ph ph-instagram-logo"></i>
                     </a>
-                    <a href="https://youtube.com/NamaeswarCybersecAcademy" target="_blank" class="text-2xl text-silver hover:text-neon transition-all">
+                    <a href="https://youtube.com/NamaeswarCybersecAcademy" target="_blank" class="text-3xl hover:text-neoncyan hover:scale-110 transition-all">
                         <i class="ph ph-youtube-logo"></i>
                     </a>
-                    <a href="mailto:contact@namaeswar.tech" class="btn-neon px-5 py-2 text-[10px] font-bold font-fira rounded-sm">
-                        CONTACT_US
+                    <a href="#" class="text-3xl hover:text-neoncyan hover:scale-110 transition-all">
+                        <i class="ph ph-linkedin-logo"></i>
                     </a>
                 </div>
+            </div>
+
+            <div class="text-xs font-fira space-y-2 opacity-40">
+                <p>© 2024 NAMAESWAR CYBERSEC. ALL RIGHTS RESERVED.</p>
+                <p class="tracking-widest">ENCRYPTED CONNECTION // TLS 1.3</p>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        // Navbar scroll effect
-        window.onscroll = function() {
-            const nav = document.getElementById('navbar');
-            if (window.pageYOffset > 50) {
-                nav.classList.add('glass', 'py-4', 'border-b', 'border-neon/10');
-                nav.classList.remove('py-6');
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('glass', 'py-4', 'border-neoncyan/10');
+                navbar.classList.remove('py-6', 'border-transparent');
             } else {
-                nav.classList.remove('glass', 'py-4', 'border-b', 'border-neon/10');
-                nav.classList.add('py-6');
+                navbar.classList.remove('glass', 'py-4', 'border-neoncyan/10');
+                navbar.classList.add('py-6', 'border-transparent');
             }
-            
-            // Reveal animations
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const revealTop = el.getBoundingClientRect().top;
-                if (revealTop < windowHeight - 100) {
-                    el.classList.add('active');
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuBtn.querySelector('i');
+            icon.classList.toggle('ph-list');
+            icon.classList.toggle('ph-x');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBtn.querySelector('i').classList.replace('ph-x', 'ph-list');
+            });
+        });
+
+        // Smooth reveal for section headers
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
-        };
+        }, observerOptions);
 
-        // Mobile menu toggle
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('flex');
-                icon.classList.replace('ph-list', 'ph-x');
-            } else {
-                menu.classList.add('hidden');
-                menu.classList.remove('flex');
-                icon.classList.replace('ph-x', 'ph-list');
-            }
-        }
-
-        // Trigger initial reveal
-        window.dispatchEvent(new Event('scroll'));
-
-        // Scan animation keyframes in CSS didn't work inside style tag sometimes, defining here
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes scan {
-                0% { top: 0; }
-                100% { top: 100%; }
-            }
-        `;
-        document.head.appendChild(style);
+        document.querySelectorAll('section').forEach(section => {
+            section.style.transition = 'all 1s ease-out';
+            section.style.transform = 'translateY(20px)';
+            section.classList.add('opacity-0');
+            observer.observe(section);
+        });
     </script>
 </body>
 </html>
