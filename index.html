@@ -1,334 +1,440 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAMAESWAR CYBERSEC | Secure Today, Safe Tomorrow</title>
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  GraduationCap, 
+  Terminal, 
+  Shield, 
+  Server, 
+  Instagram, 
+  Youtube, 
+  Activity, 
+  ChevronRight, 
+  Menu, 
+  X,
+  Cpu,
+  Lock,
+  Globe,
+  Zap
+} from 'lucide-react';
+
+// --- STYLES & CONSTANTS ---
+
+const neonShadow = "shadow-[0_0_20px_rgba(0,243,255,0.3)]";
+const glassEffect = "backdrop-blur-xl bg-black/40 border border-white/10";
+const cyanAccent = "#00F3FF";
+
+const navLinks = [
+  { name: 'Home', href: '#home' },
+  { name: 'Academy', href: '#academy' },
+  { name: 'Services', href: '#services' },
+  { name: 'About', href: '#about' },
+  { name: 'Contact', href: '#contact' }
+];
+
+// --- COMPONENTS ---
+
+const BackgroundGrid = () => (
+  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div 
+      className="absolute inset-0 opacity-[0.15]" 
+      style={{ 
+        backgroundImage: `linear-gradient(${cyanAccent} 1px, transparent 1px), linear-gradient(90deg, ${cyanAccent} 1px, transparent 1px)`,
+        backgroundSize: '50px 50px' 
+      }} 
+    />
+    <motion.div 
+      animate={{ 
+        y: [0, 1000],
+        opacity: [0, 0.5, 0] 
+      }}
+      transition={{ 
+        duration: 8, 
+        repeat: Infinity, 
+        ease: "linear" 
+      }}
+      className="absolute top-0 left-0 w-full h-[200px] bg-gradient-to-b from-transparent via-[#00F3FF]/20 to-transparent"
+    />
+  </div>
+);
+
+const NavItem = ({ name, href }) => (
+  <motion.a
+    href={href}
+    className="relative text-sm font-fira tracking-widest text-[#C0C0C0] hover:text-white transition-colors px-2 py-1"
+    whileHover="hover"
+  >
+    {name}
+    <motion.span
+      variants={{
+        hover: { width: '100%', opacity: 1 }
+      }}
+      initial={{ width: 0, opacity: 0 }}
+      className="absolute bottom-0 left-0 h-[1px] bg-[#00F3FF] shadow-[0_0_8px_#00F3FF]"
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    />
+  </motion.a>
+);
+
+const TacticalCard = ({ icon: Icon, title, description, isMuted, isActive, features }) => (
+  <motion.div
+    whileHover={{ y: -10, scale: 1.02 }}
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: isMuted ? 0.4 : 1, y: 0 }}
+    viewport={{ once: true }}
+    className={`${glassEffect} p-8 rounded-2xl relative overflow-hidden group transition-all duration-500 hover:border-[#00F3FF]/50 ${isActive ? 'ring-1 ring-[#00F3FF]/30' : ''} ${isActive ? 'animate-pulse-slow' : ''}`}
+    style={{ boxShadow: isActive ? `0 0 30px rgba(0, 243, 255, 0.1)` : '' }}
+  >
+    {isActive && (
+       <motion.div 
+         animate={{ opacity: [0.1, 0.3, 0.1] }}
+         transition={{ duration: 3, repeat: Infinity }}
+         className="absolute inset-0 bg-[#00F3FF]/5 pointer-events-none"
+       />
+    )}
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <div className={`mb-6 p-4 w-fit rounded-xl ${isActive ? 'bg-[#00F3FF]/20' : 'bg-white/5'} border border-white/10 group-hover:border-[#00F3FF]/50 transition-colors`}>
+      <Icon size={32} className={isActive ? 'text-[#00F3FF]' : 'text-white'} />
+    </div>
+
+    <h3 className="text-xl font-fira font-bold text-white mb-4 tracking-tight uppercase">
+      {title}
+    </h3>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cyberblack: '#0A0A0A',
-                        neoncyan: '#00F3FF',
-                        silvergray: '#C0C0C0',
-                    },
-                    fontFamily: {
-                        fira: ['Fira Code', 'monospace'],
-                        inter: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
+    <p className="text-sm text-[#C0C0C0] leading-relaxed mb-6 font-inter">
+      {description}
+    </p>
 
-    <!-- Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <style>
-        /* Matrix Grid Background */
-        .matrix-bg {
-            background-image: 
-                linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
-        }
-
-        /* Neon Glows */
-        .neon-text {
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7), 0 0 20px rgba(0, 243, 255, 0.4);
-        }
-
-        .neon-border {
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-            border: 1px solid rgba(0, 243, 255, 0.3);
-        }
-
-        .neon-border:hover {
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
-            border-color: #00F3FF;
-        }
-
-        /* Pulsing Animation */
-        @keyframes pulse-neon {
-            0%, 100% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); border-color: rgba(0, 243, 255, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(0, 243, 255, 0.6); border-color: #00F3FF; }
-        }
-        .animate-pulse-neon {
-            animation: pulse-neon 2s infinite ease-in-out;
-        }
-
-        /* Spinning Tech Graphic */
-        .tech-ring {
-            border: 2px dashed #00F3FF;
-            border-radius: 50%;
-            position: absolute;
-            animation: spin 15s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes spin-reverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
-
-        .tech-ring-inner {
-            border: 2px solid rgba(0, 243, 255, 0.2);
-            border-top: 2px solid #00F3FF;
-            border-radius: 50%;
-            animation: spin-reverse 8s linear infinite;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0A0A0A; }
-        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00F3FF; }
-
-        .glass {
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-    </style>
-</head>
-<body class="bg-cyberblack text-silvergray font-inter selection:bg-neoncyan selection:text-cyberblack">
-
-    <!-- Navbar -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-6 border-b border-transparent">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-3 group">
-                <!-- PASTE LOGO SVG HERE -->
-                <div class="w-10 h-10 flex items-center justify-center bg-neoncyan/10 rounded-lg border border-neoncyan/30 group-hover:rotate-[360deg] transition-all duration-700">
-                    <i class="ph ph-shield-checkered text-neoncyan text-2xl"></i>
-                </div>
-                <span class="font-fira font-bold text-xl tracking-tighter text-white uppercase">
-                    NAMAESWAR <span class="text-neoncyan neon-text">CYBERSEC</span>
-                </span>
-            </div>
-
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex gap-8 items-center font-fira text-xs uppercase tracking-widest">
-                <a href="#home" class="text-white hover:text-neoncyan transition-colors">Home</a>
-                <a href="#academy" class="hover:text-neoncyan transition-colors">Academy</a>
-                <a href="#services" class="hover:text-neoncyan transition-colors">Services</a>
-                <a href="#about" class="hover:text-neoncyan transition-colors">About Us</a>
-                <a href="#contact" class="hover:text-neoncyan transition-colors">Contact Us</a>
-            </div>
-
-            <!-- Mobile Toggle -->
-            <button class="md:hidden text-neoncyan text-3xl" id="menu-btn">
-                <i class="ph ph-list"></i>
-            </button>
+    <div className="space-y-2">
+      {features.map((f, i) => (
+        <div key={i} className="flex items-center gap-2 text-[10px] font-fira text-[#C0C0C0]/80 uppercase tracking-tighter">
+          <Zap size={10} className="text-[#00F3FF]" />
+          {f}
         </div>
+      ))}
+    </div>
+  </motion.div>
+);
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-neoncyan/20 p-6 flex flex-col gap-6 font-fira text-sm uppercase tracking-widest md:hidden">
-            <a href="#home" class="mobile-link">Home</a>
-            <a href="#academy" class="mobile-link">Academy</a>
-            <a href="#services" class="mobile-link">Services</a>
-            <a href="#about" class="mobile-link">About Us</a>
-            <a href="#contact" class="mobile-link">Contact Us</a>
+// --- MAIN PAGE ---
+
+export default function HomePage() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const titleText = "NAMAESWAR CYBERSEC";
+  
+  return (
+    <div className="bg-[#0A0A0A] min-h-screen text-white font-inter selection:bg-[#00F3FF] selection:text-black">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@300;400;600;800&display=swap');
+        .font-fira { font-family: 'Fira Code', monospace; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        @keyframes pulse-slow {
+          0%, 100% { border-color: rgba(0, 243, 255, 0.1); }
+          50% { border-color: rgba(0, 243, 255, 0.6); }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 3s infinite ease-in-out;
+        }
+      `}</style>
+
+      {/* --- NAVBAR --- */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'py-4 glass' : 'py-8 bg-transparent'}`}>
+        <div className={`absolute inset-0 ${scrolled ? 'backdrop-blur-xl bg-black/60 border-b border-white/10' : 'bg-transparent'} transition-all`} />
+        <div className="max-w-7xl mx-auto px-6 relative flex justify-between items-center">
+          <div className="flex items-center gap-4 group cursor-pointer">
+            <div className="relative">
+              {/* PASTE LOGO SVG HERE */}
+              <div className="w-10 h-10 border border-[#00F3FF]/50 flex items-center justify-center rounded-lg group-hover:rotate-90 transition-transform duration-500">
+                <Cpu size={24} className="text-[#00F3FF] shadow-neon" />
+              </div>
+            </div>
+            <span className="font-fira font-bold text-xl tracking-tighter">
+              NAMAESWAR <span className="text-[#00F3FF] drop-shadow-[0_0_8px_#00F3FF]">CYBERSEC</span>
+            </span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => <NavItem key={link.name} {...link} />)}
+          </div>
+
+          <button 
+            className="md:hidden text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X /> : <Menu />}
+          </button>
         </div>
-    </nav>
+      </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <div class="matrix-bg absolute inset-0 z-0 opacity-40"></div>
+      {/* --- HERO SECTION --- */}
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <BackgroundGrid />
         
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10 w-full">
-            <div class="space-y-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 bg-neoncyan/10 border border-neoncyan/30 rounded-full">
-                    <span class="w-2 h-2 bg-neoncyan rounded-full animate-pulse"></span>
-                    <span class="text-[10px] font-fira tracking-widest text-neoncyan uppercase">Initializing Secure Protocol v2.0</span>
-                </div>
-                
-                <h1 class="text-5xl lg:text-7xl font-fira font-bold text-white leading-tight">
-                    NAMAESWAR <br>
-                    <span class="text-neoncyan neon-text">CYBERSEC</span>
-                </h1>
-                
-                <p class="text-lg md:text-xl font-light text-silvergray max-w-lg leading-relaxed">
-                    SECURE TODAY, SAFE TOMORROW. <br>
-                    <span class="opacity-70 text-base">Elite offensive security training and robust vulnerability assessments for the digital age.</span>
-                </p>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+          <div className="text-left">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#00F3FF]/30 bg-[#00F3FF]/5 mb-10"
+            >
+              <Activity size={14} className="text-[#00F3FF] animate-pulse" />
+              <span className="text-[10px] font-fira tracking-[0.3em] text-[#00F3FF] uppercase">Initializing Secure Protocol v2.0</span>
+            </motion.div>
 
-                <div class="flex flex-wrap gap-6 pt-4">
-                    <a href="#academy" class="px-8 py-4 bg-neoncyan text-cyberblack font-fira font-bold text-sm rounded shadow-[0_0_20px_rgba(0,243,255,0.4)] hover:shadow-[0_0_35px_rgba(0,243,255,0.6)] transition-all transform hover:-translate-y-1">
-                        EXPLORE ACADEMY
-                    </a>
-                    <a href="#services" class="px-8 py-4 border border-neoncyan/50 text-neoncyan font-fira font-bold text-sm rounded hover:bg-neoncyan/10 transition-all transform hover:-translate-y-1">
-                        OUR SERVICES
-                    </a>
-                </div>
-            </div>
+            <h1 className="text-6xl md:text-8xl font-fira font-bold leading-[0.9] mb-8">
+              {titleText.split(" ").map((word, i) => (
+                <span key={i} className="block overflow-hidden">
+                  <motion.span
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    transition={{ delay: 0.2 + (i * 0.1), duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className={`inline-block ${word === 'CYBERSEC' ? 'text-[#00F3FF] drop-shadow-[0_0_15px_rgba(0,243,255,0.5)]' : 'text-white'}`}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
 
-            <div class="hidden md:flex justify-center items-center relative h-[500px]">
-                <div class="tech-ring w-[350px] h-[350px]"></div>
-                <div class="tech-ring-inner w-[280px] h-[280px]"></div>
-                <div class="absolute w-[200px] h-[200px] bg-neoncyan/5 rounded-full flex items-center justify-center backdrop-blur-sm border border-neoncyan/10">
-                    <i class="ph ph-cpu text-neoncyan text-8xl opacity-80 animate-pulse"></i>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-lg md:text-xl text-[#C0C0C0] max-w-xl font-light mb-12 leading-relaxed"
+            >
+              SECURE TODAY, SAFE TOMORROW. Empowering the next generation of digital guardians with elite offensive security training and battlefield-proven vulnerability assessments.
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-wrap gap-6"
+            >
+              <motion.a
+                href="#academy"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 243, 255, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-[#00F3FF] text-black font-fira font-bold text-sm tracking-widest rounded-sm uppercase transition-all"
+              >
+                Explore Academy
+              </motion.a>
+              <motion.a
+                href="#services"
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(0, 243, 255, 0.1)" }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 border border-[#00F3FF] text-[#00F3FF] font-fira font-bold text-sm tracking-widest rounded-sm uppercase transition-all"
+              >
+                Our Services
+              </motion.a>
+            </motion.div>
+          </div>
+
+          <div className="hidden lg:block relative">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+              className="relative z-10"
+            >
+              <div className="relative w-full aspect-square max-w-[500px] mx-auto">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 border-2 border-dashed border-[#00F3FF]/20 rounded-full"
+                />
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-10 border border-white/10 rounded-full"
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className={`${glassEffect} p-12 rounded-3xl`}>
+                    <Lock size={120} className="text-[#00F3FF] drop-shadow-[0_0_20px_rgba(0,243,255,0.5)]" />
+                  </div>
                 </div>
-                <!-- Decorative scanning line -->
-                <div class="absolute w-[400px] h-[2px] bg-gradient-to-r from-transparent via-neoncyan/40 to-transparent top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-[bounce_4s_infinite]"></div>
-            </div>
+              </div>
+            </motion.div>
+            
+            {/* Decorative data points */}
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                animate={{ 
+                  y: [0, -20, 0],
+                  opacity: [0.3, 1, 0.3]
+                }}
+                transition={{ duration: 3 + i, repeat: Infinity, delay: i }}
+                className={`absolute ${i === 0 ? 'top-0 left-0' : i === 1 ? 'bottom-20 right-0' : 'top-40 right-10'} ${glassEffect} p-3 rounded-lg flex items-center gap-3`}
+              >
+                <div className="w-2 h-2 rounded-full bg-[#00F3FF]" />
+                <span className="text-[10px] font-fira text-[#C0C0C0]">SYS_STATUS: OPTIMAL</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Tactical Operations Section -->
-    <section id="academy" class="py-24 relative bg-[#0D0D0D]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-16">
-                <span class="font-fira text-neoncyan text-xs tracking-[0.3em] uppercase underline underline-offset-8 decoration-neoncyan/30">Operational Units</span>
-                <h2 class="text-4xl md:text-5xl font-fira font-bold text-white mt-6 uppercase">Tactical <span class="text-neoncyan">Operations</span></h2>
-                <p class="text-silvergray mt-4 opacity-60">Advanced education and protection services for sovereign security.</p>
+      {/* --- TACTICAL GRID --- */}
+      <section id="academy" className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+            <div className="max-w-2xl">
+              <motion.h2 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="text-4xl md:text-5xl font-fira font-bold mb-6 uppercase"
+              >
+                Tactical <span className="text-[#00F3FF]">Operations</span>
+              </h2>
+              <p className="text-[#C0C0C0] font-light leading-relaxed">
+                Our operations are split into high-intensity training programs and professional-grade security assessments. 
+                Whether you're building a career or protecting an empire, our protocols are battlefield-proven.
+              </p>
             </div>
+            <div className="h-px flex-grow bg-gradient-to-r from-transparent via-white/10 to-transparent mx-10 hidden md:block" />
+          </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1: 1-Month Bootcamp -->
-                <div class="p-8 bg-[#111] rounded-xl flex flex-col h-full animate-pulse-neon border border-neoncyan/30 group transition-all duration-500">
-                    <div class="w-12 h-12 bg-neoncyan/20 rounded flex items-center justify-center text-neoncyan text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="ph ph-graduation-cap"></i>
-                    </div>
-                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">1-Month Bootcamp</h3>
-                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Practical-only learning: OSI Model, TCP/IP, and OWASP Top 10 vulnerabilities. No fluff, just results.</p>
-                    <div class="mt-8 flex items-center gap-2 text-neoncyan text-[10px] font-fira font-bold tracking-widest uppercase">
-                        <span class="w-2 h-2 bg-neoncyan rounded-full"></span> Active Enrollment
-                    </div>
-                </div>
-
-                <!-- Card 2: Upcoming Academy -->
-                <div class="p-8 bg-[#0F0F0F] rounded-xl flex flex-col h-full border border-white/5 opacity-60 group hover:opacity-100 hover:border-neoncyan/30 transition-all duration-500">
-                    <div class="w-12 h-12 bg-white/5 rounded flex items-center justify-center text-silvergray text-2xl mb-6">
-                        <i class="ph ph-terminal"></i>
-                    </div>
-                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">Upcoming Academy</h3>
-                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Advanced VAPT modules, Red Teaming Operations, and Malware Analysis pathways in development.</p>
-                    <div class="mt-8 text-silvergray/40 text-[10px] font-fira font-bold tracking-widest uppercase italic">
-                        Coming Soon
-                    </div>
-                </div>
-
-                <!-- Card 3: VAPT Services -->
-                <div id="services" class="p-8 bg-[#111] rounded-xl flex flex-col h-full border border-white/10 group hover:-translate-y-2 neon-border transition-all duration-500">
-                    <div class="w-12 h-12 bg-neoncyan/10 rounded flex items-center justify-center text-neoncyan text-2xl mb-6 group-hover:rotate-12 transition-transform">
-                        <i class="ph ph-shield-check"></i>
-                    </div>
-                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">VAPT Assessment</h3>
-                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Professional-grade Penetration Testing. We find the holes before adversaries do.</p>
-                    <div class="mt-8 flex items-center gap-2 text-neoncyan text-[10px] font-fira font-bold tracking-widest uppercase cursor-pointer group-hover:underline">
-                        Inquire Service <i class="ph ph-arrow-right"></i>
-                    </div>
-                </div>
-
-                <!-- Card 4: IT Consultancy -->
-                <div class="p-8 bg-[#0F0F0F] rounded-xl flex flex-col h-full border border-white/5 opacity-60 group hover:opacity-100 hover:border-neoncyan/30 transition-all duration-500">
-                    <div class="w-12 h-12 bg-white/5 rounded flex items-center justify-center text-silvergray text-2xl mb-6">
-                        <i class="ph ph-hard-drives"></i>
-                    </div>
-                    <h3 class="text-xl font-fira font-bold text-white mb-4 uppercase">IT Consultancy</h3>
-                    <p class="text-sm opacity-70 leading-relaxed flex-grow">Managed SOC services, Cloud Security Architecture, and Strategic Compliance advisory.</p>
-                    <div class="mt-8 text-silvergray/40 text-[10px] font-fira font-bold tracking-widest uppercase italic">
-                        Pipeline Stage
-                    </div>
-                </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <TacticalCard 
+              icon={GraduationCap}
+              isActive={true}
+              title="1-Month Bootcamp"
+              description="Practical-only training for aspiring specialists. Master core infrastructure and attack vectors."
+              features={["OSI & TCP/IP Model", "Network Exploitation", "OWASP Top 10", "Practical Labs"]}
+            />
+            <TacticalCard 
+              icon={Terminal}
+              isMuted={true}
+              title="Upcoming Academy"
+              description="Advanced tiered learning including kernel exploitation and deep neural network security."
+              features={["Advanced VAPT", "Red Teaming Ops", "Kernel Hacking", "AI Security"]}
+            />
+            <TacticalCard 
+              icon={Shield}
+              title="VAPT Assessment"
+              description="Full-spectrum vulnerability assessment and penetration testing for enterprise infrastructure."
+              features={["Web & Mobile Apps", "Internal Network", "Cloud Security", "API Hardening"]}
+            />
+            <TacticalCard 
+              icon={Server}
+              isMuted={true}
+              title="IT Consultancy"
+              description="End-to-end security architecture design and managed detection response services."
+              features={["SOC Strategy", "Incident Response", "Compliance Audit", "Threat Intel"]}
+            />
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer id="contact" class="py-16 border-t border-white/5 relative bg-cyberblack overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
-            <div class="space-y-4 max-w-xs">
-                <span class="font-fira font-bold text-white text-lg">NAMAESWAR <span class="text-neoncyan">CYBERSEC</span></span>
-                <p class="text-xs opacity-50 leading-relaxed">Pioneering ethical security methodologies for organizations that refuse to be compromised.</p>
+      {/* --- FOOTER --- */}
+      <footer id="contact" className="py-20 border-t border-[#00F3FF]/20 bg-[#080808]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-16 mb-20">
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <Cpu size={24} className="text-[#00F3FF]" />
+                <span className="font-fira font-bold text-xl tracking-tighter">NAMAESWAR CYBERSEC</span>
+              </div>
+              <p className="text-sm text-[#C0C0C0] font-light leading-relaxed">
+                Forging the next generation of ethical hackers. Our mission is to bridge the gap between theoretical security and absolute practical mastery.
+              </p>
             </div>
-
-            <div class="flex flex-col gap-6">
-                <h4 class="font-fira text-xs font-bold uppercase text-white tracking-widest">Connect to Network</h4>
-                <div class="flex gap-6 justify-center">
-                    <a href="https://instagram.com/NamaeswarCybersecOfficial" target="_blank" class="text-3xl hover:text-neoncyan hover:scale-110 transition-all">
-                        <i class="ph ph-instagram-logo"></i>
-                    </a>
-                    <a href="https://youtube.com/NamaeswarCybersecAcademy" target="_blank" class="text-3xl hover:text-neoncyan hover:scale-110 transition-all">
-                        <i class="ph ph-youtube-logo"></i>
-                    </a>
-                    <a href="#" class="text-3xl hover:text-neoncyan hover:scale-110 transition-all">
-                        <i class="ph ph-linkedin-logo"></i>
-                    </a>
+            
+            <div className="grid grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <h4 className="text-white font-fira text-sm font-bold uppercase tracking-widest">Protocol</h4>
+                <div className="flex flex-col gap-2 text-sm text-[#C0C0C0]">
+                  <a href="#home" className="hover:text-[#00F3FF]">Terminal</a>
+                  <a href="#academy" className="hover:text-[#00F3FF]">Academy</a>
+                  <a href="#services" className="hover:text-[#00F3FF]">Services</a>
                 </div>
+              </div>
+              <div className="space-y-4">
+                <h4 className="text-white font-fira text-sm font-bold uppercase tracking-widest">Network</h4>
+                <div className="flex flex-col gap-2 text-sm text-[#C0C0C0]">
+                  <a href="#" className="hover:text-[#00F3FF]">Instagram</a>
+                  <a href="#" className="hover:text-[#00F3FF]">YouTube</a>
+                  <a href="#" className="hover:text-[#00F3FF]">GitHub</a>
+                </div>
+              </div>
             </div>
 
-            <div class="text-xs font-fira space-y-2 opacity-40">
-                <p>© 2024 NAMAESWAR CYBERSEC. ALL RIGHTS RESERVED.</p>
-                <p class="tracking-widest">ENCRYPTED CONNECTION // TLS 1.3</p>
+            <div className="space-y-6">
+              <h4 className="text-white font-fira text-sm font-bold uppercase tracking-widest">Join the Network</h4>
+              <div className="flex items-center gap-4">
+                <motion.a 
+                  whileHover={{ y: -5, color: '#00F3FF' }}
+                  href="#" className="p-3 bg-white/5 rounded-lg border border-white/10 transition-colors"
+                >
+                  <Instagram size={20} />
+                </motion.a>
+                <motion.a 
+                  whileHover={{ y: -5, color: '#00F3FF' }}
+                  href="#" className="p-3 bg-white/5 rounded-lg border border-white/10 transition-colors"
+                >
+                  <Youtube size={20} />
+                </motion.a>
+                <motion.a 
+                  whileHover={{ y: -5, color: '#00F3FF' }}
+                  href="#" className="p-3 bg-white/5 rounded-lg border border-white/10 transition-colors"
+                >
+                  <Globe size={20} />
+                </motion.a>
+              </div>
             </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-white/5 gap-6">
+            <div className="flex items-center gap-6 text-[10px] font-fira text-[#C0C0C0] uppercase tracking-widest">
+              <span>© 2024 NAMAESWAR CYBERSEC</span>
+              <span className="hidden md:block opacity-30">|</span>
+              <span>All Rights Reserved</span>
+            </div>
+            <div className="flex items-center gap-3 text-[10px] font-fira text-[#00F3FF]">
+              <Lock size={12} />
+              <span>ENCRYPTED_CONNECTION_TLS_1.3</span>
+            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
 
-    <!-- Scripts -->
-    <script>
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('glass', 'py-4', 'border-neoncyan/10');
-                navbar.classList.remove('py-6', 'border-transparent');
-            } else {
-                navbar.classList.remove('glass', 'py-4', 'border-neoncyan/10');
-                navbar.classList.add('py-6', 'border-transparent');
-            }
-        });
-
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const icon = menuBtn.querySelector('i');
-            icon.classList.toggle('ph-list');
-            icon.classList.toggle('ph-x');
-        });
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                menuBtn.querySelector('i').classList.replace('ph-x', 'ph-list');
-            });
-        });
-
-        // Smooth reveal for section headers
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('opacity-100');
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('section').forEach(section => {
-            section.style.transition = 'all 1s ease-out';
-            section.style.transform = 'translateY(20px)';
-            section.classList.add('opacity-0');
-            observer.observe(section);
-        });
-    </script>
-</body>
-</html>
+      {/* --- MOBILE MENU --- */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[60] bg-[#0A0A0A] p-10 flex flex-col justify-center"
+          >
+            <div className="flex flex-col gap-8">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.name}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-4xl font-fira font-bold uppercase tracking-tighter text-[#C0C0C0] hover:text-[#00F3FF]"
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
