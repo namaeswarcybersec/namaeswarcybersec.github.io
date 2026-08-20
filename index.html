@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="theme-color" content="#050505">
-<meta name="theme-color" content="#050505">
 <meta name="description" content="NAMAESWAR CYBERSEC — Secure Today, Safe Tomorrow.">
 <title>NAMAESWAR CYBERSEC — Secure Today, Safe Tomorrow</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +20,7 @@ tailwind.config={theme:{extend:{colors:{cyber:'#00F3FF',ink:'#050505',panel:'#0B
 /* Floating quick-contact controls */
 .floating-actions{position:fixed;left:22px;right:auto;bottom:27vh;z-index:120;display:flex;flex-direction:column;align-items:center;gap:14px;transition:transform .35s ease,opacity .35s ease;will-change:transform,opacity}
 .floating-actions.scrolling-down{transform:translateY(130px);opacity:0;pointer-events:none}
-.float-action{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;position:relative;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.14);background:rgba(7,11,14,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 35px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.06);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.float-action{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;position:relative;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.14);background:rgba(7,11,14,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 35px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.06);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
 .float-action::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(0,243,255,.24);box-shadow:0 0 22px rgba(0,243,255,.08);animation:floatRing 2.6s ease-in-out infinite;pointer-events:none}
 .float-action:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 16px 42px rgba(0,0,0,.45),0 0 28px rgba(0,243,255,.16),inset 0 1px 0 rgba(255,255,255,.08)}
 .float-action:focus-visible{outline:2px solid #00F3FF;outline-offset:5px}
@@ -31,7 +30,7 @@ tailwind.config={theme:{extend:{colors:{cyber:'#00F3FF',ink:'#050505',panel:'#0B
 .float-label{position:absolute;left:76px;white-space:nowrap;padding:8px 11px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(7,11,14,.92);color:#c9d1d9;font:700 .57rem/1 "Fira Code",monospace;letter-spacing:.11em;opacity:0;transform:translateX(-5px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
 .float-action:hover .float-label,.float-action:focus-visible .float-label{opacity:1;transform:translateX(0)}
 @keyframes floatRing{0%,100%{transform:scale(.98);opacity:.65}50%{transform:scale(1.06);opacity:1}}
-@media (max-width:640px){.floating-actions{left:14px;right:auto;bottom:25vh;gap:10px}.float-action{width:54px;height:54px}.float-action i{font-size:22px}.float-label{display:none}}
+@media (max-width:640px){.floating-actions{left:14px;right:auto;bottom:25vh;gap:10px}.float-action{width:60px;height:60px}.float-action i{font-size:26px}.float-label{display:none}}
 @media (prefers-reduced-motion:reduce){.floating-actions{transition:none}.float-action{transition:none}.float-action::before{animation:none}}
 
 </style>
