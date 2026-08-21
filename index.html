@@ -118,22 +118,41 @@ tailwind.config={theme:{extend:{colors:{cyber:'#00F3FF',ink:'#050505',panel:'#0B
 <style id="mobile-menu-no-scroll-final">
 @media (max-width: 767px){
   #drawer.mobile-drawer{
+    top:max(7px, env(safe-area-inset-top))!important;
+    right:8px!important;
     width:min(50vw,360px)!important;
-    height:50vh!important;
-    max-height:50vh!important;
+    height:47vh!important;
+    max-height:47vh!important;
     min-height:0!important;
     overflow:hidden!important;
-    padding:10px!important;
-    grid-template-rows:auto 1fr auto!important;
-    gap:6px!important;
+    padding:8px!important;
+    grid-template-rows:32px 1fr 34px!important;
+    gap:3px!important;
+    border-radius:16px!important;
   }
+  #drawer.mobile-drawer > div:first-child{min-height:32px!important;}
+  #drawer.mobile-drawer .logo-shell{width:32px!important;height:32px!important;padding:3px!important;}
+  #drawer.mobile-drawer #closeMenu{width:32px!important;height:32px!important;border-radius:9px!important;}
   #drawer.mobile-drawer nav{
     min-height:0!important;
+    height:100%!important;
     overflow:hidden!important;
+    justify-content:space-evenly!important;
   }
   #drawer.mobile-drawer .mobile-link{
     min-height:0!important;
-    flex:1 1 auto!important;
+    height:auto!important;
+    flex:1 1 0!important;
+    padding:0 5px!important;
+    font-size:clamp(.57rem,2.35vw,.68rem)!important;
+    letter-spacing:.055em!important;
+  }
+  #drawer.mobile-drawer .mobile-link i{font-size:.82rem!important;}
+  #drawer.mobile-drawer > .cta{
+    min-height:34px!important;
+    font-size:.52rem!important;
+    padding:0 8px!important;
+    border-radius:8px!important;
   }
 }
 </style>
